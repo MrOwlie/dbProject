@@ -9,5 +9,6 @@ def createUser(cursor,name,ssn,adress,email,zipCode,phone,password,adminlevel):
     runQuery(cursor,query)
 
 def validateUser (cursor,userid,password):
-    query = "SELECT password FROM users WHERE uid "
-    password = runQuery(cursor,)
+    query = "SELECT password FROM users WHERE uid = " + userid
+    realPassword = runQuery(cursor,query)
+    return (password == realPassword)
