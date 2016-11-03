@@ -2,7 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import url_for
 from flaskext.mysql import MySQL
-import database.py
+import database
 import pyjade
 
 #initialize the app and add extensions
@@ -27,9 +27,6 @@ mysql.init_app(app)
 def root():
     conn = mysql.connect()
     cursor = conn.cursor()
-
-    template = render_template ('index.jade')
-    print (template)
 
     cursor.execute("UPDATE products SET name = 'asdasd' WHERE uid = 12")
     cursor.execute("SELECT name from products where uid=12")
