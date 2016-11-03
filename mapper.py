@@ -36,6 +36,9 @@ def root():
 def contact():
     return "fredrik.uvgard@gmail.com <br/> johan.kannel@gmail.com"
 
+@app.route('/about')
+def about():
+    return "made by Kannel and Fredrik"
 
 #Run the server
 if __name__ == '__main__':
