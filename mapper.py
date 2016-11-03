@@ -27,6 +27,7 @@ def root():
     conn = mysql.connect()
     cursor = conn.cursor()
 
+    cursor.execute("UPDATE products SET name = 'asdasd' WHERE uid = 12")
     cursor.execute("SELECT name from products where uid=12")
     return cursor.fetchone()
     #return render_template('index.jade')
