@@ -44,6 +44,12 @@ def contact():
 def about():
     return "made by Kannel and Fredrik"
 
+@app.route('/register', methods=['POST'])
+def register():
+    name = request.form['name']
+    email = request.form['email']
+    password = request.form['password']
+    return render_template('register.jade')
 
 
 #Run the server
