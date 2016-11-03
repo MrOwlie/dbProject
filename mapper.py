@@ -33,7 +33,9 @@ def root():
     #return render_template('index.jade')
 
 
-
+@app.route('/about')
+def about():
+    return "made by Kannel and Fredrik"
 
 #Run the server
 if __name__ == '__main__':
