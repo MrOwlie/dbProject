@@ -4,11 +4,9 @@ from flask import url_for
 from flask import request
 from flaskext.mysql import MySQL
 import database
-import pyjade
 
 #initialize the app and add extensions
 app = Flask(__name__)
-app.jinja_env.add_extension('pyjade.ext.jinja.PyJadeExtension')
 
 #initialize the MySQL connection
 mysql = MySQL()
@@ -26,13 +24,8 @@ mysql.init_app(app)
 #index
 @app.route('/')
 def root():
-    conn = mysql.connect()
-    cursor = conn.cursor()
 
-    cursor.execute("UPDATE products SET name = 'asdasd' WHERE uid = 12")
-    cursor.execute("SELECT name from products where uid=12")
-    return cursor.fetchone()
-    #return render_template('index.jade')
+    return render_template('index.html')
 
 @app.route('/contact')
 def contact():
@@ -42,12 +35,12 @@ def contact():
 def about():
     return "made by Kannel and Fredrik"
 
-@app.route('/register', methods=['POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    name = request.form['name']
-    email = request.form['email']
-    password = request.form['password']
-    return render_template('register.jade')
+    #name = request.form['name']
+    #email = request.form['email']
+    #password = request.form['password']
+    return render_template('register.html')
 
 
 #Run the server
