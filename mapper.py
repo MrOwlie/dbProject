@@ -32,7 +32,9 @@ def root():
     return cursor.fetchone()
     #return render_template('index.jade')
 
-
+@app.route('/contact')
+def contact():
+    return "fredrik.uvgard@gmail.com <br/> johan.kannel@gmail.com"
 
 
 #Run the server
