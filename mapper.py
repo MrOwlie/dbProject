@@ -2,19 +2,13 @@ from flask import Flask
 from flask import render_template
 from flask import url_for
 from flask import request
-from flaskext.mysql import MySQL
-import database
+from database.py import Database
 
 #initialize the app and add extensions
 app = Flask(__name__)
-
+db = new Database(app)
 #initialize the MySQL connection
-mysql = MySQL()
-app.config['MYSQL_DATABASE_USER'] = 'python'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'pythonpesswerd'
-app.config['MYSQL_DATABASE_DB'] = 'dbproject'
-app.config['MYSQL_DATABASE_HOST'] = 'arma.publiclir.se'
-mysql.init_app(app)
+
 
 #Static files
 #url_for('static', filename = 'style.css')
