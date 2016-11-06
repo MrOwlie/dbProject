@@ -1,10 +1,9 @@
 from flaskext.mysql import MySQL
-from jsonrpc import ServiceMethod
 
 
 class Database:
 
-    __init__(self, app):
+    def __init__(self, app):
         #MYSQL init
         self.mysql = MySQL()
         app.config['MYSQL_DATABASE_USER'] = 'python'

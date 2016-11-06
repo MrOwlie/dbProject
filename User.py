@@ -8,7 +8,7 @@ class User:
         if(self.validate()):
             self.update();
 
-    def __init__(self, db, name, email, password, zipCode, address, cart):
+    def __init__(self, db, name, email, password, zipCode, address):
         self.name = name
         self.ssn = ssn
         self.address = address
@@ -21,6 +21,7 @@ class User:
         save(self);
 
     def validate(self):
+        #checks if the password entered in the frontend matches our DB records
         realPassword = self.db.runQuery("SELECT password FROM users WHERE uid = " + ID)
         return (password == realPassword)
 
@@ -38,4 +39,5 @@ class User:
 
     def save(self):
         #This function will save the user object to DB
+        ##WIP : Need to check if the user exists in the db, if it doesn't we should insert instead of update.
         self.db.runQuery("UPDATE users SET name = " + self.name + ", ssn = " + self.ssn + ", address = " + self.address + ", email = " + self.email + ", zipCode = " + zipCode + ", phone = " + phone + ", password = " + password + " WHERE uid = " + ID)

@@ -2,11 +2,12 @@ from flask import Flask
 from flask import render_template
 from flask import url_for
 from flask import request
-from database.py import Database
+from flask_jsonrpc import JSONRPC
+from database import Database
 
 #initialize the app and add extensions
 app = Flask(__name__)
-db = new Database(app)
+db = Database(app)
 #initialize the MySQL connection
 
 
@@ -20,6 +21,10 @@ db = new Database(app)
 def root():
 
     return render_template('index.html')
+
+@app.route('/test')
+def registerTest():
+    return render_template('/RegisterWidget/test.html')
 
 @app.route('/contact')
 def contact():
