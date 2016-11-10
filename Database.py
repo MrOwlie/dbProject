@@ -19,6 +19,6 @@ class Database:
 
     def runQuery(self, query):
         #Creates cursor, executes query and returns the cursor
-        cursor = getCursor(self)
+        cursor = self.getCursor()
         cursor.execute(query)
         return cursor

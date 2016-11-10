@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    <div class = "menu">
-      <p>
-        Welcome
-        testing gits
-      </p>
-      <div id = "RegisterWidget"></div>
+
+  <!-- CSS -->
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <body class="body">
+    <header class="header">
+      <p>User DB functionality</p>
+    </header>
+    <div class="main">
+      {% include 'RegisterWidget.html' %}
+      {% include 'LoginWidget.html'%}
     </div>
   </body>
 </html>
