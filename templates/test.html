@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+  <script src="http://code.angularjs.org/1.5.3/angular-route.min.js"></script>
+  <script src="/static/js/app.js"></script>
+  <meta charset="utf-8">
+  <title>Test</title>
+
+  <head>
+    <p style="font-size:5em">
+      Testing angular.js
+    </p>
+  </head>
+
+  <body>
+    <form action="{{request.url}}" method="POST">
+      <p style="align:center">
+        Name: <input type="text" name="name"> <br/>
+        Password: <input type="password" name="password"> <br/>
+        <input type="submit" value="Submit">
+      </p>
+    </form>
+
+    <p style="font-size:5em">
+      {{name}} <br/> {{password}}
+    </p>
+
+
+  </body>
+</html>
