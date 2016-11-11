@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 CREATE TABLE IF NOT EXISTS `carts` (
   `uid` int(12) NOT NULL AUTO_INCREMENT,
   `customer` int(8) NOT NULL,
-  `price` int(8) NOT NULL DEFAULT '0',
+  `locked` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
@@ -74,7 +74,6 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `delivery_zip` varchar(8) NOT NULL,
   `delivery_city` varchar(64) NOT NULL,
   `cart_uid` int(8) NOT NULL,
-  `price` int(16) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`),
   FOREIGN KEY (customer) REFERENCES users(uid),
   FOREIGN KEY (cart_uid) REFERENCES carts(uid)

@@ -16,7 +16,7 @@ from UserHandler import UserHandler
 
 #initialize the app and add extensionsA
 app = Flask(__name__)
-#CORS(app)
+#CORS(app)#
 db = Database(app)
 userHandler = UserHandler(db)
 #initialize the MySQL connection
@@ -64,15 +64,15 @@ def register():
 
 @app.route('/reset', methods=['GET', 'POST'])
 def reset():
-    return render_template('reset.html', data = '<a href = "../reset_confirmed">Click here to reset the database</a>')
+    return render_template('reset.html', data = 'Did not confirm yet')
 
-@app.route('/reset_confirmed', methods=['GET','POST'])
+@app.route('/resetConfirmed', methods=['GET','POST'])
 def resetConfirmed():
     f = open('SQL_setup.sql','r')
     data = f.read();
     data = data.replace("\n", "")
     db.runQuery(data)
-    return render_template('reset.html', data = "The database has been reset!")
+    return render_template('resetConfirmed.html', data = "The database has been reset!")
 
 
 #Run the server
