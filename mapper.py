@@ -14,7 +14,7 @@ from UserHandler import UserHandler
 
 
 
-#initialize the app and add extensions
+#initialize the app and add extensionsA
 app = Flask(__name__)
 #CORS(app)
 db = Database(app)
