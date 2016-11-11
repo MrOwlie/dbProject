@@ -22,33 +22,6 @@
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  opacity: 0;
-}
-.RegisterWidget{
-  border-radius: 2em;
-  border-color: #40669e;
-  border-width: 0.5em;
-  border-style: solid;
-  color:#1a3142;
-  width: 20em;
-  margin: 2em;
-  text-align: center;
-  flex-grow: 1;
-  /*float: left;*/
-  background-color:#80adf2;
-}
-.LoginWidget{
-  border-radius: 2em;
-  border-color: #40669e;
-  border-width: 0.5em;
-  border-style: solid;
-  color:#1a3142;
-  width: 20em;
-  margin: 2em;
-  text-align: center;
-  flex-grow: 1;
-  /*float: right;*/
-  background-color:#80adf2;
 }
 .form-container {
   border: 1px solid #002536;
