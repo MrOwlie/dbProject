@@ -11,16 +11,16 @@ class Database:
         app.config['MYSQL_DATABASE_DB'] = 'dbproject'
         app.config['MYSQL_DATABASE_HOST'] = 'arma.publiclir.se'
         self.mysql.init_app(app)
+        self.conn = self.mysql.connect()
 
 
     def getCursor(self):
         #Creates cursor
-        return self.mysql.get_db().cursor();
+        return self.conn.cursor();
 
     def runQuery(self, query):
         #Creates cursor, executes query and returns the cursor
         cursor = self.getCursor()
-        #query = "SELECT apahej HEJ"
-        print("asdasd " + query)
         cursor.execute(query)
+        self.conn.commit()
         return cursor
