@@ -34,6 +34,7 @@ def root():
     switch = request.form.get("submit")
     if(switch == "Login"):
         userHandler.returningUser(request.form.get("name"), request.form.get("password"))
+        userHandler.users.items()
     elif(switch == "Register"):
         if(request.form.get("password") == request.form.get("passwordConfirm")):
             userHandler.newUser(request.form.get("name"), request.form.get("email"), request.form.get("password"), request.form.get("zipCode"), request.form.get("address"), request.form.get("phone"), request.form.get("ssn"))
