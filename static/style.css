@@ -14,14 +14,14 @@
   display:flex;
   flex: auto;
   flex-direction: row;
-  background-color:#5a89ce;
+  background-color: transparent;
   border-radius: 1em;
   padding: 1em;
   position: absolute;
   top: 50%;
   left: 50%;
   margin-right: -50%;
-  transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%);
 }
 .RegisterWidget{
   border-radius: 2em;

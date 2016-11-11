@@ -69,6 +69,6 @@ class User:
         ##WIP : Need to check if the user exists in the db, if it doesn't we should insert instead of update.
 
         query = "UPDATE users SET name = '{}', ssn = '{}', adress = '{}', email = '{}', zip_code = '{}', phone = '{}', password = '{}' WHERE uid = '13'".format(self.name, self.ssn, self.address, self.email, self.zipCode, self.phone, self.password)
-        query = "INSERT INTO users (name,ssn,adress,email,zip_code,phone,password) VALUES ('{}','{}','{}','{}','{}','{}','{}')".format(self.name, self.ssn, self.address, self.email, self.zipCode, self.phone, self.password)
+        #query = "INSERT INTO users (name,ssn,adress,email,zip_code,phone,password) VALUES ('{}','{}','{}','{}','{}','{}','{}')".format(self.name, self.ssn, self.address, self.email, self.zipCode, self.phone, self.password)
         print (query)
         self.db.runQuery(query)
