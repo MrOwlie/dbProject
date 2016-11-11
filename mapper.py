@@ -58,7 +58,8 @@ def register():
     #name = request.form['name']
     #email = request.form['email']
     #password = request.form['password']
-    return render_template('register.html')
+    db.runQuery("UPDATE users SET ssn = '12414' WHERE uid = '12'")
+    return redirect(make_response("<p>Query send</p>"))
 
 
 #Run the server

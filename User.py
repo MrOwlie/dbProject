@@ -67,4 +67,6 @@ class User:
     def save(self):
         #This function will save the user object to DB
         ##WIP : Need to check if the user exists in the db, if it doesn't we should insert instead of update.
-        self.db.runQuery("UPDATE users SET name = " + self.name + ", ssn = " + self.ssn + ", address = " + self.address + ", email = " + self.email + ", zipCode = " + self.zipCode + ", phone = " + self.phone + ", password = " + self.password + " WHERE uid = " + self.ID.__str__())
+
+        print "UPDATE users SET name = '" + self.name + "', ssn = '" + self.ssn + "', adress = '" + self.address + "', email = '" + self.email + "', zip_code = '" + self.zipCode + "', phone = '" + self.phone + "', password = '" + self.password + "' WHERE uid = '13'"
+        self.db.runQuery("UPDATE users SET name = '" + self.name + "', ssn = '" + self.ssn + "', adress = '" + self.address + "', email = '" + self.email + "', zip_code = '" + self.zipCode + "', phone = '" + self.phone + "', password = '" + self.password + "' WHERE uid = '13'")
