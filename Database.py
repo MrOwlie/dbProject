@@ -21,6 +21,7 @@ class Database:
         #Creates cursor, executes query and returns the cursor
         cursor = self.getCursor()
         #query = "SELECT apahej HEJ"
+        #query = "INSERT INTO users "
         print("asdasd " + query)
         cursor.execute(query)
         return cursor
