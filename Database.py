@@ -20,5 +20,7 @@ class Database:
     def runQuery(self, query):
         #Creates cursor, executes query and returns the cursor
         cursor = self.getCursor()
+        #query = "SELECT apahej HEJ"
+        print("asdasd " + query)
         cursor.execute(query)
         return cursor

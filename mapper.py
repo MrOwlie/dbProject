@@ -15,7 +15,7 @@ from UserHandler import UserHandler
 
 #initialize the app and add extensions
 app = Flask(__name__)
-CORS(app)
+#CORS(app)
 db = Database(app)
 userHandler = UserHandler(db)
 #initialize the MySQL connection
