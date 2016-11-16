@@ -13,5 +13,9 @@ class UserHandler:
         self.users[ID] = user
 
     def returningUser(self, email, password):
+        validated = self.db.validatePassword(email,password)
+        if not validated:
+            return "Invalid email or password"
         user = User(self.db, email, password)
         self.users[user.ID] = user
+        return None

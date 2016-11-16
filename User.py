@@ -35,40 +35,42 @@ class User:
         print(self.ID)
         #This constructor will create a user object and save to DB
         if(ID == None):
-            if(self.validate()):
-                self.update(self.name)
-            else:
+            self.update(email = self.email)
                 #WRONG PASSWORD MADDAFAKKA
-                render_template('index.html', loginError = "Invalid Email or password!")
+
+                #render_template('index.html', loginError = "Invalid Email or password!")
         else:
             self.save();
 
+
     def validate(self):
         #checks if the password entered in the frontend matches our DB records
+
         realPassword = self.db.runQuery("SELECT password FROM users WHERE email = '{}'".format(self.email))
         realPassword = realPassword.fetchone()
         print ("passwords: {}, {}, {}".format(self.password, realPassword, self.password == realPassword))
         return (self.password == realPassword)
 
 
-    def update(self, ID = None, name = None):
+    def update(self, ID = None, email = None):
         #This function will update the user object from DB
         if(ID == None):
-            queryEnd = ("email = " + email)
+            queryEnd = ("email = '{}'").format(email)
         else:
-            queryEnd = ("uid = " + ID)
+            queryEnd = ("uid = '{}'").format(ID)
 
-        data = self.db.runQuery("SELECT uid, name, ssn, address, email, city, zipCode, phone, password FROM users WHERE " + queryEnd)
+        data = self.db.runQuery("SELECT uid, name, ssn, address, email, city, zipCode, phone, password FROM users WHERE {}".format(queryEnd))
         data = data.fetchone()
-        self.password = data.pop()
-        self.phone = data.pop()
-        self.zipCode = data.pop()
-        self.city = data.pop()
-        self.email = data.pop()
-        self.address = data.pop()
-        self.ssn = data.pop()
-        self.name = data.pop()
-        self.ID = data.pop()
+        print(data)
+        self.password = data[8]
+        self.phone = data[7]
+        self.zipCode = data[6]
+        self.city = data[5]
+        self.email = data[4]
+        self.address = data[3]
+        self.ssn = data[2]
+        self.name = data[1]
+        self.ID = data[0]
 
 
     def save(self):

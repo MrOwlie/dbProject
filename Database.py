@@ -20,10 +20,23 @@ class Database:
 
     def runQuery(self, query):
         #Creates cursor, executes query and returns the cursor
-        cursor = self.getCursor()
-        #query = "SELECT apahej HEJ"
-        #query = "INSERT INTO users "
-        print("asdasd " + query)
-        cursor.execute(query)
-        self.conn.commit()
+        try:
+            print(query)
+            cursor = self.getCursor()
+            cursor.execute(query)
+            self.conn.commit()
+        except(UnicodeEncodeError):
+            print ("UNICORNS EXIST")
         return cursor
+
+    def validatePassword(self, email, password):
+        #checks if the password entered in the frontend matches our DB records
+
+        try:
+            realPassword = self.runQuery("SELECT password FROM users WHERE email = '{}'".format(email))
+            realPassword = realPassword.fetchone()[0]
+        except (TypeError):
+            return False
+
+        print ("passwords: {}, {}, {}".format(password, realPassword, password == realPassword))
+        return (password == realPassword)

@@ -36,11 +36,15 @@ def getHighestID ():
 getHighestID()
 
 @app.route('/', methods=['GET', 'POST'])
-def root(error = None):
+def root():
+    errors = []
     switch = request.form.get("submit")
     if(switch == "Login"):
-        userHandler.returningUser(request.form.get("email"), request.form.get("password"))
-        userHandler.users.items()
+        errors = userHandler.returningUser(request.form.get("email"), request.form.get("password"))
+        if(errors != None):
+            return render_template("index.html",loginError = errors)
+        else:
+            return render_template("index.html")
 
     elif(switch == "Register"):
         if(request.form.get("password") == request.form.get("passwordConfirm")):
@@ -49,9 +53,8 @@ def root(error = None):
         else:
             request.form.clear
             return make_response("<p style='color:red; font-size:3em;'>Error: Passwords do not match!</p>", 1337)
-    if(error == None):
-        return render_template('index.html')
-    else:
+
+    return render_template('index.html')
 
 
 @app.route('/index', methods=['GET', 'POST'])
