@@ -5,10 +5,11 @@ CREATE DATABASE IF NOT EXISTS `dbProject` DEFAULT CHARACTER SET latin1 COLLATE l
 USE `dbProject`;
 
 
-
+DROP TABLE IF EXISTS feedback;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS product_details;
 DROP TABLE IF EXISTS carts;
 
 
@@ -17,8 +18,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `name` varchar(50) NOT NULL,
   `ssn` varchar(50) NOT NULL,
   `email` varchar(64) NOT NULL,
-  `adress` varchar(64) NOT NULL,
-  `zip_code` varchar(8) NOT NULL,
+  `address` varchar(64) NOT NULL,
+  `zipCode` varchar(8) NOT NULL,
   `city` varchar(64) NOT NULL DEFAULT '',
   `phone` varchar(32) NOT NULL,
   `password` varchar(64) NOT NULL,

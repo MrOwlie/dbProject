@@ -29,22 +29,29 @@ userHandler = UserHandler(db)
 
 #index
 
+def getHighestID ():
+    query = "SELECT MAX(uid) FROM users"
+    global currentID
+    currentID = db.runQuery(query)
+getHighestID()
 
 @app.route('/', methods=['GET', 'POST'])
-def root():
+def root(error = None):
     switch = request.form.get("submit")
     if(switch == "Login"):
-        userHandler.returningUser(request.form.get("name"), request.form.get("password"))
+        userHandler.returningUser(request.form.get("email"), request.form.get("password"))
         userHandler.users.items()
+
     elif(switch == "Register"):
         if(request.form.get("password") == request.form.get("passwordConfirm")):
-            userHandler.newUser(request.form.get("name"), request.form.get("email"), request.form.get("password"), request.form.get("zipCode"), request.form.get("address"), request.form.get("phone"), request.form.get("ssn"))
+            userHandler.newUser(request.form.get("name"), request.form.get("email"), request.form.get("password"), request.form.get("zipCode"), request.form.get("city"), request.form.get("address"), request.form.get("phone"), request.form.get("ssn"))
             return render_template('index.html')
         else:
             request.form.clear
             return make_response("<p style='color:red; font-size:3em;'>Error: Passwords do not match!</p>", 1337)
-
-    return render_template('index.html')
+    if(error == None):
+        return render_template('index.html')
+    else:
 
 
 @app.route('/index', methods=['GET', 'POST'])
