@@ -29,16 +29,26 @@ userHandler = UserHandler(db)
 
 #index
 
+def getHighestID ():
+    query = "SELECT MAX(uid) FROM users"
+    global currentID
+    currentID = db.runQuery(query)
+getHighestID()
 
 @app.route('/', methods=['GET', 'POST'])
 def root():
+    errors = []
     switch = request.form.get("submit")
     if(switch == "Login"):
-        userHandler.returningUser(request.form.get("name"), request.form.get("password"))
-        userHandler.users.items()
+        errors = userHandler.returningUser(request.form.get("email"), request.form.get("password"))
+        if(errors != None):
+            return render_template("index.html",loginError = errors)
+        else:
+            return render_template("index.html")
+
     elif(switch == "Register"):
         if(request.form.get("password") == request.form.get("passwordConfirm")):
-            userHandler.newUser(request.form.get("name"), request.form.get("email"), request.form.get("password"), request.form.get("zipCode"), request.form.get("address"), request.form.get("phone"), request.form.get("ssn"))
+            userHandler.newUser(request.form.get("name"), request.form.get("email"), request.form.get("password"), request.form.get("zipCode"), request.form.get("city"), request.form.get("address"), request.form.get("phone"), request.form.get("ssn"))
             return render_template('index.html')
         else:
             request.form.clear
