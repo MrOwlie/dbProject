@@ -1,0 +1,9 @@
+<html>
+<script>
+  var hasConfirmed = confirm('Reset?');
+  if(hasConfirmed){
+    window.location = "{{request.path + "Confirmed"}}";
+  }
+</script>
+<p>{{data}}</p>
+</html>

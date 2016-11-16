@@ -5,6 +5,7 @@ from flask import make_response
 from flask import url_for
 from flask import session
 from flask import request
+from flask import flash
 from flask_restful import Resource, Api
 from flask_jsonrpc import JSONRPC
 from flask_cors import CORS
@@ -13,9 +14,9 @@ from UserHandler import UserHandler
 
 
 
-#initialize the app and add extensions
+#initialize the app and add extensionsA
 app = Flask(__name__)
-#CORS(app)
+#CORS(app)#
 db = Database(app)
 userHandler = UserHandler(db)
 #initialize the MySQL connection
@@ -46,7 +47,6 @@ def root():
     return render_template('index.html')
 
 
-
 @app.route('/index', methods=['GET', 'POST'])
 def test(name="", password=""):
     name = request.form["name"]
@@ -61,6 +61,18 @@ def register():
     #password = request.form['password']
     db.runQuery("UPDATE users SET ssn = '12414' WHERE uid = '12'")
     return redirect(make_response("<p>Query send</p>"))
+
+@app.route('/reset', methods=['GET', 'POST'])
+def reset():
+    return render_template('reset.html', data = 'Did not confirm yet')
+
+@app.route('/resetConfirmed', methods=['GET','POST'])
+def resetConfirmed():
+    f = open('SQL_setup.sql','r')
+    data = f.read();
+    data = data.replace("\n", "")
+    db.runQuery(data)
+    return render_template('resetConfirmed.html', data = "The database has been reset!")
 
 
 #Run the server
