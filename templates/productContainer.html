@@ -12,7 +12,7 @@
     <div class="main">
       {% for item in products %}
         {% with product = item %}
-          {% include 'productTemplate.html' %}
+          {% include 'productContainerTemplate.html' %}
         {% endwith %}
       {% endfor %}
     </div>
