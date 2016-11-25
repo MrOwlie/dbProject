@@ -3,20 +3,45 @@
 
   <head>
   </head>
+  <script>
 
-  <div class = "productContainer">
-    <div class = "titleContainer">{{ product[1] }}</div>
-    <div class = "productImageContainer">
+  function increase{{product[0]}}(){
+    var value = parseInt($('#{{product[0]}}amountContainer').html());
+    value++;
+    if(value < 0){
+      value = 0;
+    }
+    $('#{{product[0]}}amountContainer').text(value);
+
+  }
+  function decrease{{product[0]}}(){
+    var value = parseInt($('#{{product[0]}}amountContainer').html());
+    value--;
+    if(value < 0){
+      value = 0;
+    }
+    $('#{{product[0]}}amountContainer').text(value);
+
+
+  }
+
+
+  </script>
+  <div id="{{product[0]}}productContainer" class = "productContainer">
+    <div id="{{product[0]}}titleContainer" class = "titleContainer">{{ product[1] }}</div>
+    <div id = "{{product[0]}}productImageContainer" class = "productImageContainer">
       <img src=" {{ url_for('static', filename=product[1].replace(" ", "-") + ".png") }} " />
     </div>
-    <div class = "productControlContainer">
-      <div class= "productController">
-        <div class = "incController">+</div>
-        <div class = "decController">-</div>
+    <div id="{{product[0]}}productControlContainer" class = "productControlContainer">
+      <div id="{{product[0]}}productController" class= "productController">
+        <div onclick="increase{{product[0]}}()" id="{{product[0]}}incController" class = "incController">+</div>
+        <div onclick="decrease{{product[0]}}()" id="{{product[0]}}decController" class = "decController">-</div>
       </div>
-      <div class = "amountContainer">0</div>
-      <div class = "productCartButton"></div>
+      <div id="{{product[0]}}amountContainer" class = "amountContainer">0</div>
+      <div id="{{product[0]}}productCartButton" class = "productCartButton"></div>
     </div>
+
+
 
 
   </div>

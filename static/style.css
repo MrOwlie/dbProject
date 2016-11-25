@@ -146,8 +146,11 @@ body{
   margin-left: 10px;
   width: 170px;
   height: 230px;
-  background-color: #0000FF;
+  background-color: #40669e;
   text-align: center;
+}
+.titleContainer{
+  color: #55a3db;
 }
 
 .productImageContainer{
@@ -155,7 +158,6 @@ body{
   display: inline-block;
   width: 160px;
   height: 160px;
-  background-color: #FFFF00;
 }
 
 .productController{
@@ -167,6 +169,10 @@ body{
   width: 20px;
   background-color: #008000;
   margin-left: 5px;
+  cursor:default;
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
 }
 
 .decController{
@@ -174,6 +180,10 @@ body{
   width: 20px;
   background-color: #FF0000;
   margin-left: 5px;
+  cursor:default;
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
 }
 
 .amountContainer{
@@ -182,6 +192,9 @@ body{
   width: 40px;
   line-height: 40px;
   background-color: #808080;
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
 }
 
 .productCartButton{
