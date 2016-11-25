@@ -91,7 +91,7 @@ def test(name="", password=""):
 def product():
     products = db.runQuery("SELECT * FROM product_details");
     products = products.fetchall();
-    return render_template('product.html', products = products)
+    return render_template('productContainer.html', products = products)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
