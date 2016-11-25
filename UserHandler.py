@@ -6,12 +6,16 @@ class UserHandler:
         self.db = db;
         self.users = dict()
 
-    def newUser(self, name, email, password, zipCode, address, phone, ssn):
-        ID = uuid.uuid4();
-        user = User(self.db, ID, name, email, password, zipCode, address, phone, ssn);
+    def newUser(self, name, email, password, zipCode, city, address, phone, ssn):
+        ID = currentID
+        user = User(self.db, email, password, name, ID, zipCode, city, address, phone, ssn);
         user.handler = self;
         self.users[ID] = user
 
-    def returningUser(self, name, password):
-        user = User(self.db, name, password)
+    def returningUser(self, email, password):
+        validated = self.db.validatePassword(email,password)
+        if not validated:
+            return "Invalid email or password"
+        user = User(self.db, email, password)
         self.users[user.ID] = user
+        return None
