@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+  <!-- CSS -->
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <body>
+    <header class="header">
+      <p>{{headerTitle}}</p>
+    </header>
+    <div class="main">
+      <form class="form-container" action="{{ request.path }}" method="POST">
+        <div class="form-title"><h2>Account</h2></div>
+        <input class="form-field" type="text" name="name" placeholder={{name}}><br/>
+        <input class="form-field" type="password" name="password" placeholder="Password..."><br/>
+        <input class="form-field" type="password" name="passwordConfirm" placeholder="Password..."><br/>
+        <input class="form-field" type="text" name="email" placeholder={{email}}><br/>
+        <input class="form-field" type="number" name="phone" placeholder={{phone}}><br/>
+        <input class="form-field" type="number" name="ssn" placeholder={{ssn}}><br/>
+        <input class="form-field" type="text" name="address" placeholder={{address}}><br/>
+        <input class="form-field" type="number" name="zipCode" placeholder={{zipcode}}><br/><br/>
+        <input class="form-field" type="text" name="city" placeholder={{city}}><br/>
+        <input class="submit-button" type="submit" name="EditAccount" value="Save"> <br/>
+      </form>
+
+    </div>
+  </body>
+</html>
