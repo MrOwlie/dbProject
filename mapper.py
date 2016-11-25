@@ -42,21 +42,21 @@ def root():
     if(switch == "Login"):
         errors = userHandler.returningUser(request.form.get("email"), request.form.get("password"))
         if(errors != None):
-            return render_template("index.html",loginError = errors)
+            return render_template("index.html",loginError = errors, headerTitle = "Login")
         else:
-            return render_template("index.html")
+            return render_template("index.html", headerTitle = "Login")
 
     elif(switch == "Register"):
         if(request.form.get("password") == request.form.get("passwordConfirm")):
             userHandler.newUser(request.form.get("name"), request.form.get("email"), request.form.get("password"), request.form.get("zipCode"), request.form.get("city"), request.form.get("address"), request.form.get("phone"), request.form.get("ssn"))
-            return render_template('index.html')
+            return render_template('index.html', headerTitle = "Register")
         else:
             request.form.clear
             return make_response("<p style='color:red; font-size:3em;'>Error: Passwords do not match!</p>", 1337)
 
-    return render_template('index.html')
+    return render_template('index.html', headerTitle = "Register")
 
-'''
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # Here we use a class of some kind to represent and validate our
@@ -78,7 +78,7 @@ def login():
 
         return flask.redirect(next or flask.url_for('index'))
     return flask.render_template('login.html', form=form)
-'''
+
 
 @app.route('/index', methods=['GET', 'POST'])
 def test(name="", password=""):
@@ -99,6 +99,10 @@ def register():
 def reset():
     return render_template('reset.html', data = 'Did not confirm yet')
 
+@app.route('/account', methods=['GET', 'POST'])
+def account():
+    return render_template('AccountWidget.html')
+
 @app.route('/resetConfirmed', methods=['GET','POST'])
 def resetConfirmed():
     f = open('SQL_setup.sql','r')
@@ -106,7 +110,6 @@ def resetConfirmed():
     data = data.replace("\n", "")
     db.runQuery(data)
     return render_template('resetConfirmed.html', data = "The database has been reset!")
-
 
 #Run the server
 if __name__ == '__main__':
