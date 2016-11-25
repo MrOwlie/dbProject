@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+  <!-- CSS -->
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <body class="body">
+    <header class="header">
+      <p>Products</p>
+    </header>
+    <div class="main">
+      {% for item in products %}
+        {% with product = item %}
+          {% include 'productTemplate.html' %}
+        {% endwith %}
+      {% endfor %}
+    </div>
+  </body>
+</html>

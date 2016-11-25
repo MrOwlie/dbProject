@@ -1,0 +1,24 @@
+
+<html>
+
+  <head>
+  </head>
+
+  <div class = "productContainer">
+    <div class = "titleContainer">{{ product[1] }}</div>
+    <div class = "productImageContainer">
+      <img src=" {{ url_for('static', filename=product[1].replace(" ", "-") + ".png") }} " />
+    </div>
+    <div class = "productControlContainer">
+      <div class= "productController">
+        <div class = "incController">+</div>
+        <div class = "decController">-</div>
+      </div>
+      <div class = "amountContainer">0</div>
+      <div class = "productCartButton"></div>
+    </div>
+
+
+  </div>
+
+</html>

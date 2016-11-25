@@ -54,6 +54,12 @@ def test(name="", password=""):
 
     return render_template('test.html', name = name, password = password)
 
+@app.route('/product')
+def product():
+    products = db.runQuery("SELECT * FROM product_details");
+    products = products.fetchall();
+    return render_template('product.html', products = products)
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     #name = request.form['name']
@@ -73,6 +79,15 @@ def resetConfirmed():
     data = data.replace("\n", "")
     db.runQuery(data)
     return render_template('resetConfirmed.html', data = "The database has been reset!")
+
+@app.route('/query', methods=['GET', 'POST'])
+def query(qer = ""):
+    qer = request.form["q"]
+    if(qer != ""):
+        db.runQuery(q)
+        return render_template('query.html')
+    else:
+        return render_template('query.html')
 
 
 #Run the server

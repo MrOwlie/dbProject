@@ -23,7 +23,7 @@ class Database:
         cursor = self.getCursor()
         #query = "SELECT apahej HEJ"
         #query = "INSERT INTO users "
-        print("asdasd " + query)
+        print(query)
         cursor.execute(query)
         self.conn.commit()
         return cursor
