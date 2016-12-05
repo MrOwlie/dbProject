@@ -7,10 +7,10 @@ class UserHandler:
         self.users = dict()
 
     def newUser(self, name, email, password, zipCode, city, address, phone, ssn):
-        ID = currentID
-        user = User(self.db, email, password, name, ID, zipCode, city, address, phone, ssn);
-        user.handler = self;
-        self.users[ID] = user
+        seshID = uuid.uuid4
+        user = User(self.db, seshID, email, password, name, zipCode, city, address, phone, ssn);
+        user.handler = self
+        self.users[seshID] = user
 
     def returningUser(self, email, password):
         validated = self.db.validatePassword(email,password)
