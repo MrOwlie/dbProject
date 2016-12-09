@@ -11,11 +11,13 @@ class User:
         if(self.validate()):
             self.update(self.name);'''
 
+    @staticmethod
     def register(db, seshID, email, password, name, zipCode, city, address, phone, ssn):
         user = User(db, seshID, email, password, name, zipCode, city, address, phone, ssn)
         user.registerDB()
         return user
 
+    @staticmethod
     def login(db, seshID, email):
         user = User(db, seshID, email, "", "", "", "", "", "", "")
         user.update()

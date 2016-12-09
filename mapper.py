@@ -96,7 +96,7 @@ def register():
         #Check if username is valid (nothing to check here)
 
         #Check if email is valid
-        if('@' not in email and '.' not in email):
+        if('@' not in email or '.' not in email):
             error += "<body style='background-color: LightBlue'><p style = 'font-size: 30px; color: DodgerBlue'> E-mail was not valid. </p></body><br/>"
 
         #Check if phone is valid
