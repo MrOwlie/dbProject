@@ -72,7 +72,7 @@ def test(name="", password=""):
 
 @app.route('/product')
 def product():
-    products = db.runQuery("SELECT * FROM product_details");
+    products = db.runQuery("SELECT * FROM product_details")
     products = products.fetchall();
     return render_template('productContainer.html', products = products)
 
