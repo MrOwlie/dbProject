@@ -29,11 +29,6 @@ userHandler = UserHandler(db)
 
 #index
 
-def getHighestID ():
-    query = "SELECT MAX(uid) FROM users"
-    global currentID
-    currentID = db.runQuery(query)
-getHighestID()
 
 @app.route('/', methods=['GET', 'POST'])
 def root():
@@ -120,6 +115,7 @@ def resetConfirmed():
 
 #Run the server
 if __name__ == '__main__':
+    getHighestID()
     app.run()
     while True:
         time.sleep(10)

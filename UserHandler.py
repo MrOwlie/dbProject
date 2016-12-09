@@ -7,7 +7,7 @@ class UserHandler:
         self.users = dict()
 
     def newUser(self, name, email, password, zipCode, city, address, phone, ssn):
-        ID = currentID
+        ID = db.runQuery("SELECT MAX(uid) FROM users").fetchone()
         user = User(self.db, email, password, name, ID, zipCode, city, address, phone, ssn);
         user.handler = self;
         self.users[ID] = user
