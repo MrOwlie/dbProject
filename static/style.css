@@ -7,26 +7,24 @@
 
 }
 body{
-  flex-direction: column;
   background-color:#5a89ce;
 }
 .main{
-  display:flex;
-  flex: auto;
-  flex-direction: row;
   background-color: transparent;
   border-radius: 1em;
   padding: 1em;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
+  margin: 0px auto;
 }
+
+.accountMain {
+  margin: 0px auto;
+  width: 815px;
+  display: flex;
+}
+
 .form-container {
   border: 1px solid #002536;
   background: #edf6fa;
-  flex-grow: 1;
   background: -webkit-gradient(linear, left top, left bottom, from(#96cde6), to(#edf6fa));
   background: -webkit-linear-gradient(top, #96cde6, #edf6fa);
   background: -moz-linear-gradient(top, #96cde6, #edf6fa);
@@ -45,7 +43,8 @@ body{
   min-width:300px;
   padding:20px;
   width:300px;
-  margin: 2em;
+  margin: 2em auto;
+
 }
 .form-field {
   border: 1px solid #0073a8;
@@ -144,10 +143,16 @@ body{
 .productContainer{
   float:left;
   margin-left: 10px;
+  margin-bottom: 10px;
   width: 170px;
   height: 230px;
   background-color: #40669e;
   text-align: center;
+}
+
+.productsView {
+  width: 720px;
+  margin: 0px auto;
 }
 
 .titleContainer{

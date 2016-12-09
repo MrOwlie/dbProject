@@ -43,7 +43,7 @@ def root():
         loginString = userHandler.returningUser(request.form.get("email"), request.form.get("password"))
         if('ERROR:' in str(loginString)):
             print(loginString)
-            return render_template("index.html", content = ["login"], loginError = loginString, headerTitle = "Login")
+            return render_template("account.html", content = ["login"], loginError = loginString, headerTitle = "Login")
         else:
             print("uuid: " + str(loginString))
             response = make_response(redirect(url_for('products')))
@@ -74,9 +74,10 @@ def test(name="", password=""):
 
     return render_template('test.html', name = name, password = password)
 
+
 @app.route('/products')
 def products():
-    products = db.runQuery("SELECT * FROM product_details");
+    products = db.runQuery("SELECT * FROM product_details")
     products = products.fetchall();
     return render_template('productContainer.html', products = products)
 
