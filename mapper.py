@@ -140,7 +140,7 @@ def reset():
 
 @app.route('/account', methods=['GET', 'POST'])
 def account():
-    return render_template('AccountWidget.html')
+    return render_template('AccountWidget.html', headerTitle = "Account", )
 
 @app.route('/resetConfirmed', methods=['GET','POST'])
 def resetConfirmed():
