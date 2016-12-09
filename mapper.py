@@ -31,10 +31,11 @@ userHandler = UserHandler(db)
 
 
 
-@app.route('/index', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def root():
-    if(request.cookies.get('SeshID')):
-        response = make_response(render_template('productContainer.html'))
+    print(userHandler.users)
+    if(request.cookies.get('seshID') in userHandler.users):
+        response = make_response(render_template('account.html', content=["account"], user = userHandler.users[request.cookies.get('seshID')]))
         return response
     errors = []
     switch = request.form.get("submit")
@@ -42,22 +43,25 @@ def root():
         loginString = userHandler.returningUser(request.form.get("email"), request.form.get("password"))
         if('ERROR:' in str(loginString)):
             print(loginString)
-            return render_template("index.html", loginError = errors, headerTitle = "Login")
+            return render_template("account.html", content = ["login"], loginError = loginString, headerTitle = "Login")
         else:
-            print(loginString)
-            response = make_response(render_template("index.html", headerTitle = "Login"))
+            print("uuid: " + str(loginString))
+            response = make_response(redirect(url_for('products')))
             response.set_cookie('seshID', loginString)
             return response
 
     elif(switch == "Register"):
         if(request.form.get("password") == request.form.get("passwordConfirm")):
             userHandler.newUser(request.form.get("name"), request.form.get("email"), request.form.get("password"), request.form.get("zipCode"), request.form.get("city"), request.form.get("address"), request.form.get("phone"), request.form.get("ssn"))
-            return render_template('index.html', headerTitle = "Register")
+            return render_template('account.html', content = ["register"], headerTitle = "Register")
         else:
             request.form.clear
             return make_response("<p style='color:red; font-size:3em;'>Error: Passwords do not match!</p>", 1337)
 
-    return render_template('index.html', headerTitle = "Register")
+    elif(switch == "Account"):
+        pass
+
+    return render_template('account.html', content = ["login", "register"], headerTitle = "Login or Register")
 
 
 
@@ -70,8 +74,9 @@ def test(name="", password=""):
 
     return render_template('test.html', name = name, password = password)
 
-@app.route('/product')
-def product():
+
+@app.route('/products')
+def products():
     products = db.runQuery("SELECT * FROM product_details")
     products = products.fetchall();
     return render_template('productContainer.html', products = products)
@@ -96,7 +101,7 @@ def register():
         #Check if username is valid (nothing to check here)
 
         #Check if email is valid
-        if('@' not in email or '.' not in email):
+        if('@' not in email and '.' not in email):
             error += "<body style='background-color: LightBlue'><p style = 'font-size: 30px; color: DodgerBlue'> E-mail was not valid. </p></body><br/>"
 
         #Check if phone is valid

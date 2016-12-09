@@ -8,18 +8,20 @@
       <p>{{headerTitle}}</p>
     </header>
     <div class="main">
+      <div class="accountMain">
 
-      {% if "login" in content %}
-        {% include 'LoginWidget.html' %}
-      {% endif %}
+        {% if "login" in content %}
+          {% include 'LoginWidget.html' %}
+        {% endif %}
 
-      {% if "register" in content %}
-        {% include 'RegisterWidget.html' %}
-      {% endif %}
+        {% if "register" in content %}
+          {% include 'RegisterWidget.html' %}
+        {% endif %}
 
-      {% if "account" in content %}
-        {% include 'AccountWidget.html' %}
-      {% endif %}
+        {% if "account" in content %}
+          {% include 'AccountWidget.html' %}
+        {% endif %}
+      </div>
     </div>
   </body>
 </html>

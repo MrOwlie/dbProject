@@ -10,13 +10,11 @@
       <p>Products</p>
     </header>
     <div class="main">
-      <div class="productsView">
-        {% for item in products %}
-          {% with product = item %}
-            {% include 'productContainerTemplate.html' %}
-          {% endwith %}
-        {% endfor %}
-      </div>
+      {% for item in products %}
+        {% with product = item %}
+          {% include 'productContainerTemplate.html' %}
+        {% endwith %}
+      {% endfor %}
     </div>
   </body>
 </html>
