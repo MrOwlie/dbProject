@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 CREATE TABLE IF NOT EXISTS `carts` (
   `uid` int(12) NOT NULL AUTO_INCREMENT,
-  `customer` int(8) NOT NULL,
+  `order` int(8),
   `locked` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
@@ -80,11 +80,14 @@ CREATE TABLE IF NOT EXISTS `orders` (
   FOREIGN KEY (cart_uid) REFERENCES carts(uid)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
+ALTER TABLE carts
+ADD FOREIGN KEY (order)
+REFERENCES orders(uid);
 
 
 INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('Johan Kannel','12345','asdasd','johan.kannel@gmail.com',1232,24323,'123',3);
 INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('Fredrik Uvgård','123456','asdasd','fredrik.uvgard@gmail.com',1232,24323,'123',3);
 
-INSERT INTO product_details (name,description,price,stock) VALUES ('Red ball','A basic red ball. Diameter: 1 meter',50,4);
-INSERT INTO product_details (name,description,price,stock) VALUES ('Grass mower','A supersonic grassmower that mows your entire lawn in less than 2 seconds.',3000,1);
-INSERT INTO product_details (name,description,price,stock) VALUES ('Space ship','Allows travel to other universes in little time!',2000,3);
+INSERT INTO product_details (name,description,price,stock) VALUES ('Anti-fire potion','Avoid burns with this tasty potion',50,4);
+INSERT INTO product_details (name,description,price,stock) VALUES ('Cure potion','Cure even the most severe ailments',3000,1);
+INSERT INTO product_details (name,description,price,stock) VALUES ('Mana potion','Did you cast too many spells again? Drink this to keep going!',2000,3);

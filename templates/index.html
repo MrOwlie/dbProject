@@ -3,11 +3,12 @@
 
   <!-- CSS -->
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-  <body class="body">
+  <body>
     <header class="header">
-      <p>User DB functionality</p>
+      <p>{{headerTitle}}</p>
     </header>
     <div class="main">
+      {{widget1}}
       {% include 'RegisterWidget.html' %}
       {% include 'LoginWidget.html'%}
     </div>

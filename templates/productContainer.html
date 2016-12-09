@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  </head>
+  <!-- CSS -->
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <body class="body">
+    <header class="header">
+      <p>Products</p>
+    </header>
+    <div class="main">
+      {% for item in products %}
+        {% with product = item %}
+          {% include 'productContainerTemplate.html' %}
+        {% endwith %}
+      {% endfor %}
+    </div>
+  </body>
+</html>

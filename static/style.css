@@ -6,7 +6,7 @@
   color:#81c1ef;
 
 }
-.body{
+body{
   flex-direction: column;
   background-color:#5a89ce;
 }
@@ -140,4 +140,72 @@
 }
 :-moz-placeholder { /* Firefox 18- */
   color: #96cde6;
+}
+.productContainer{
+  float:left;
+  margin-left: 10px;
+  width: 170px;
+  height: 230px;
+  background-color: #40669e;
+  text-align: center;
+}
+
+.titleContainer{
+  color: #55a3db;
+}
+
+.productImageContainer{
+  margin-top: 5px;
+  display: inline-block;
+  width: 160px;
+  height: 160px;
+}
+
+.productController{
+  float: left;
+}
+
+.incController{
+  height: 20px;
+  width: 20px;
+  background-color: #008000;
+  margin-left: 5px;
+  cursor:default;
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+}
+
+.decController{
+  height: 20px;
+  width: 20px;
+  background-color: #FF0000;
+  margin-left: 5px;
+  cursor:default;
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+}
+
+.amountContainer{
+  float: left;
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  background-color: #808080;
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+}
+
+.productCartButton{
+  height: 40px;
+  width: 40px;
+  background-color: #FF00FF;
+  float: right;
+  margin-right: 5px;
+}
+
+.titleContainer{
+  color: #FFFFFF;
 }
