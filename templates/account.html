@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+  <!-- CSS -->
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <body>
+    <header class="header">
+      <p>{{headerTitle}}</p>
+    </header>
+    <div class="main">
+
+      {% if "login" in content %}
+        {% include 'LoginWidget.html' %}
+      {% endif %}
+
+      {% if "register" in content %}
+        {% include 'RegisterWidget.html' %}
+      {% endif %}
+
+      {% if "account" in content %}
+        {% include 'AccountWidget.html' %}
+      {% endif %}
+    </div>
+  </body>
+</html>
