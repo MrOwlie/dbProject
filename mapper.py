@@ -35,7 +35,7 @@ userHandler = UserHandler(db)
 def root():
     print(userHandler.users)
     if(request.cookies.get('seshID') in userHandler.users):
-        response = make_response(render_template('account.html', content=["account"], user = userHandler.users[request.cookies.get('seshID')]))
+        response = make_response(render_template('account.html', headerTitle = "Account", content=["account"], user = userHandler.users[request.cookies.get('seshID')]))
         return response
     errors = []
     switch = request.form.get("submit")
@@ -43,7 +43,7 @@ def root():
         loginString = userHandler.returningUser(request.form.get("email"), request.form.get("password"))
         if('ERROR:' in str(loginString)):
             print(loginString)
-            return render_template("index.html", content = ["login"], loginError = loginString, headerTitle = "Login")
+            return render_template("account.html", content = ["login"], loginError = loginString, headerTitle = "Login")
         else:
             print("uuid: " + str(loginString))
             response = make_response(redirect(url_for('products')))
