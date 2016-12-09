@@ -11,16 +11,15 @@ class User:
         if(self.validate()):
             self.update(self.name);'''
 
-    def register():
+    def register(db, seshID, email, password, name, zipCode, city, address, phone, ssn):
         user = User(db, seshID, email, password, name, zipCode, city, address, phone, ssn)
-        user.register()
-        return redirect('/registersuccess')
+        user.registerDB()
+        return user
 
-    def login():
-        user = User(db, seshID, email, password, "", "", "", "", "", "")
-        if(user.validate()):
-            user.update()
-            return redirect('/loginsuccess')
+    def login(db, seshID, email):
+        user = User(db, seshID, email, "", "", "", "", "", "", "")
+        user.update()
+        return user
 
 
     def __init__(self, db, seshID, email, password, name, zipCode, city, address, phone, ssn):
@@ -59,8 +58,8 @@ class User:
 
     def update(self):
         #This function will update the user object from DB
-
-        data = self.db.runQuery("SELECT uid, name, ssn, address, email, city, zipCode, phone, password FROM users WHERE email = " + self.email)
+        print("update: " + self.email)
+        data = self.db.runQuery('SELECT uid, name, ssn, address, email, city, zipCode, phone, password FROM users WHERE email = ' + "'" + self.email + "'")
         data = data.fetchone()
         print(data)
         self.password = data[8]
@@ -73,10 +72,10 @@ class User:
         self.name = data[1]
         self.ID = data[0]
 
-    def register(self):
+    def registerDB(self):
         #This function will insert the user object in DB
-        query = "INSERT INTO users (name, ssn, address, email, zip_code, city, phone, password) VALUES ('{}' , '{}' , '{}' , '{}' , '{}' , '{}' , '{}' , '{}' ) "
-        query = query.format(self.name, self.ssn, self.address, self.email, self.zip_code, self.city, self.phone, self.password)
+        query = "INSERT INTO users (name, ssn, address, email, zipCode, city, phone, password) VALUES ('{}' , '{}' , '{}' , '{}' , '{}' , '{}' , '{}' , '{}' ) "
+        query = query.format(self.name, self.ssn, self.address, self.email, self.zipCode, self.city, self.phone, self.password)
         print(query)
         self.db.runQuery(query)
 
