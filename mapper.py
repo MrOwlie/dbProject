@@ -59,7 +59,7 @@ def root():
             return make_response("<p style='color:red; font-size:3em;'>Error: Passwords do not match!</p>", 1337)
 
     elif(switch == "Account"):
-
+        pass
 
     return render_template('account.html', content = ["login", "register"], headerTitle = "Login or Register")
 
