@@ -7,7 +7,6 @@ class UserHandler:
         self.users = dict()
 
     def newUser(self, name, email, password, zipCode, city, address, phone, ssn):
-        ID = db.runQuery("SELECT MAX(uid) FROM users").fetchone()
         seshID = uuid.uuid4
         user = User.register(self.db, seshID, email, password, name, zipCode, city, address, phone, ssn)
         user.handler = self

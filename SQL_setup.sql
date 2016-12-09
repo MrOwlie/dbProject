@@ -7,10 +7,11 @@ USE `dbProject`;
 
 DROP TABLE IF EXISTS feedback;
 DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS products;
-DROP TABLE IF EXISTS product_details;
 DROP TABLE IF EXISTS carts;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS product_details;
+
 
 
 CREATE TABLE IF NOT EXISTS `users` (
@@ -26,14 +27,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `adminlevel` int(8) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`),
   UNIQUE KEY `ssn` (`ssn`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
-
-
-CREATE TABLE IF NOT EXISTS `carts` (
-  `uid` int(12) NOT NULL AUTO_INCREMENT,
-  `order` int(8),
-  `locked` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 
@@ -57,6 +50,13 @@ CREATE TABLE IF NOT EXISTS `feedback` (
   FOREIGN KEY (product) REFERENCES product_details(uid)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
+CREATE TABLE IF NOT EXISTS `carts` (
+  `uid` int(12) NOT NULL AUTO_INCREMENT,
+  `customer` int(12) NOT NULL,
+  `locked` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  FOREIGN KEY (customer) REFERENCES users(uid)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 CREATE TABLE IF NOT EXISTS `products` (
   `uid` int(12) NOT NULL AUTO_INCREMENT,
@@ -70,19 +70,13 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 CREATE TABLE IF NOT EXISTS `orders` (
   `uid` int(12) NOT NULL AUTO_INCREMENT,
-  `customer` int(8) NOT NULL,
   `delivery_adress` varchar(64) NOT NULL,
   `delivery_zip` varchar(8) NOT NULL,
   `delivery_city` varchar(64) NOT NULL,
   `cart_uid` int(8) NOT NULL,
   PRIMARY KEY (`uid`),
-  FOREIGN KEY (customer) REFERENCES users(uid),
   FOREIGN KEY (cart_uid) REFERENCES carts(uid)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
-
-ALTER TABLE carts
-ADD FOREIGN KEY (order)
-REFERENCES orders(uid);
 
 
 INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('Johan Kannel','12345','asdasd','johan.kannel@gmail.com',1232,24323,'123',3);
