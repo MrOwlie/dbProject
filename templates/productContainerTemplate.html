@@ -29,10 +29,10 @@
 
 
   </script>
-  <div onclick="show{{product[0]}}()" id="{{product[0]}}productContainer" class = "productContainer">
+  <div id="{{product[0]}}productContainer" class = "productContainer">
     <div id="{{product[0]}}titleContainer" class = "titleContainer">{{ product[1] }}</div>
     <div id = "{{product[0]}}productImageContainer" class = "productImageContainer">
-      <img src=" {{ url_for('static', filename=product[1].replace(" ", "-") + ".png") }} " />
+      <img onclick="show{{product[0]}}()" src=" {{ url_for('static', filename=product[1].replace(" ", "-") + ".png") }} " />
     </div>
     <div id="{{product[0]}}productControlContainer" class = "productControlContainer">
       <div id="{{product[0]}}productController" class= "productController">

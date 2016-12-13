@@ -83,6 +83,8 @@ def products():
 
 @app.route('/product', methods = ['GET', 'POST'])
 def productView():
+    if(request.cookies.get('seshID') is None or request.cookies.get('seshID') not in userHandler.users):
+        return redirect(url_for('root'))
     productID = request.form.get("product")
     if(productID is None):
         redirect(url_for('products'))
@@ -94,7 +96,7 @@ def productView():
         score.append(float(review[2]))
     if(len(score) != 0):
         score = sum(score)/float(len(score))
-        score = str(score) + "/5"
+        score = "{0:.2f}".format(score) + "/5"
     else:
         score = "unrated"
     return render_template('productView.html', product = product, reviews = reviews, score = score)

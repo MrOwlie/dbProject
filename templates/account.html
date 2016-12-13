@@ -20,6 +20,9 @@
 
         {% if "account" in content %}
           {% include 'AccountWidget.html' %}
+          {% for cart in carts %}
+            {{products[cart[0]]}}
+          {% endfor %}
         {% endif %}
       </div>
     </div>
