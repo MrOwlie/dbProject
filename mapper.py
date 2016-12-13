@@ -73,6 +73,8 @@ def root():
 
 @app.route('/products', methods=['GET', 'POST'])
 def products():
+    if(request.cookies.get('seshID') is None or request.cookies.get('seshID') not in userHandler.users):
+        return redirect(url_for('root'))
     if(request.form.get('reviewSubmit') is not None):
         db.runQuery("INSERT INTO feedback (product, rating, comment) VALUES ('{}' , '{}' , '{}') ".format(request.form.get('productIDReview'), request.form.get('score'), request.form.get('comment')))
     products = db.runQuery("SELECT * FROM product_details")
@@ -164,7 +166,7 @@ def account():
 
 @app.route('/resetConfirmed', methods=['GET','POST'])
 def resetConfirmed():
-    f = open('SQL_setup.sql','r')
+    f = open('/SQL_setup.sql','r')
     data = f.read();
     data = data.replace("\n", "")
     db.runQuery(data)

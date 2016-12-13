@@ -31,10 +31,10 @@
     <div style="margin:0px auto;" class="main">
       <div style="margin:0px auto;" class="productContainer">
         <img src=" {{ url_for('static', filename=product[1].replace(" ", "-") + ".png") }} " />
-        <p>{{product[2]}}</p>
-        <p>COST: {{product[3]}}</p>
-        <p>STOCK: {{product[4]}}</p>
-        <p>SCORE: {{score}}</p>
+        <p style="color: white;">{{product[2]}}</p>
+        <p style="color: white;">COST: {{product[3]}}</p>
+        <p style="color: white;">STOCK: {{product[4]}}</p>
+        <p style="color: white;">SCORE: {{score}}</p>
         <div id="{{product[0]}}productControlContainer" class = "productControlContainer">
           <div id="{{product[0]}}productController" class= "productController">
             <div onclick="increase()" id="incController" class = "incController">+</div>
@@ -44,9 +44,9 @@
           <div id="productCartButton" class = "productCartButton"></div>
         </div>
       </div>
-      <p style="font-size: 20px;">Reviews:</p>
+      <p style="color: white; font-size: 20px;">Reviews:</p>
       {% for review in reviews %}
-        <p>Comment: {{review[3]}}, score: {{review[2]}}/5</p>
+        <p style="color: white;">Comment: {{review[3]}}, score: {{review[2]}}/5</p>
       {% endfor %}
     </div>
     <div>
