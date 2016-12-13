@@ -59,27 +59,35 @@ def root():
             return make_response("<p style='color:red; font-size:3em;'>Error: Passwords do not match!</p>", 1337)
 
     elif(switch == "Account"):
-        pass
+        name = request.form.get("name")
+        email = request.form.get("email")
+        password = request.form.get("password")
+        passwordConfirm = request.form.get("passwordConfirm")
+        zipCode = request.form.get("zipCode")
+        city = request.form.get("city")
 
     return render_template('account.html', content = ["login", "register"], headerTitle = "Login or Register")
 
 
 
 
-
-@app.route('/indsadex', methods=['GET', 'POST'])
-def test(name="", password=""):
-    name = request.form["name"]
-    password = request.form["password"]
-
-    return render_template('test.html', name = name, password = password)
-
-
 @app.route('/products')
 def products():
     products = db.runQuery("SELECT * FROM product_details")
-    products = products.fetchall();
+    products = products.fetchall()
     return render_template('productContainer.html', products = products)
+
+@app.route('/product', methods = ['GET', 'POST'])
+def productView():
+    productID = request.form.get("product")
+    if(productID is None):
+        redirect(url_for('products'))
+
+    product = db.runQuery("SELECT * FROM product_details WHERE uid='{}'".format(productID)).fetchone()
+    return render_template('productView.html', product = product)
+
+
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

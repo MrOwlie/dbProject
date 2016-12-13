@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  </head>
+  <!-- CSS -->
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <body class="body">
+    <header class="header">
+      <p>{{product[1]}}</p>
+    </header>
+    <div class="main">
+      <div class="">
+        <div class="productContainer">
+          <img src=" {{ url_for('static', filename=product[1].replace(" ", "-") + ".png") }} " />
+          <p>{{product[2]}}</p>
+          <p>COST: {{product[3]}}</p>
+          <p>STOCK: {{product[4]}}
+          <div id="{{product[0]}}productControlContainer" class = "productControlContainer">
+            <div id="{{product[0]}}productController" class= "productController">
+              <div onclick="increase()" id="incController" class = "incController">+</div>
+              <div onclick="decrease()" id="decController" class = "decController">-</div>
+            </div>
+            <div id="amountContainer" class = "amountContainer">0</div>
+            <div id="productCartButton" class = "productCartButton"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

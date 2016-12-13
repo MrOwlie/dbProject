@@ -145,7 +145,7 @@ body{
   margin-left: 10px;
   margin-bottom: 10px;
   width: 170px;
-  height: 230px;
+  /*height: 230px;*/
   background-color: #40669e;
   text-align: center;
 }

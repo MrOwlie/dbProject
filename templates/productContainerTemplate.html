@@ -21,13 +21,15 @@
       value = 0;
     }
     $('#{{product[0]}}amountContainer').text(value);
-
-
+  }
+  function show{{product[0]}}(){
+    $('#{{product[0]}}redirect').submit()
   }
 
 
+
   </script>
-  <div id="{{product[0]}}productContainer" class = "productContainer">
+  <div onclick="show{{product[0]}}()" id="{{product[0]}}productContainer" class = "productContainer">
     <div id="{{product[0]}}titleContainer" class = "titleContainer">{{ product[1] }}</div>
     <div id = "{{product[0]}}productImageContainer" class = "productImageContainer">
       <img src=" {{ url_for('static', filename=product[1].replace(" ", "-") + ".png") }} " />
@@ -39,6 +41,12 @@
       </div>
       <div id="{{product[0]}}amountContainer" class = "amountContainer">0</div>
       <div id="{{product[0]}}productCartButton" class = "productCartButton"></div>
+    </div>
+    <!--- REDIRECT DUMMY FORM -->
+    <div style="display: none;">
+      <form action="{{url_for('productView')}}" method="POST" id="{{product[0]}}redirect">
+        <input type="hidden" name="product" value="{{product[0]}}">
+      </form>
     </div>
 
 
