@@ -71,8 +71,10 @@ def root():
 
 
 
-@app.route('/products')
+@app.route('/products', methods=['GET', 'POST'])
 def products():
+    if(request.form.get('reviewSubmit') is not None):
+        db.runQuery("INSERT INTO feedback (product, rating, comment) VALUES ('{}' , '{}' , '{}') ".format(request.form.get('productIDReview'), request.form.get('score'), request.form.get('comment')))
     products = db.runQuery("SELECT * FROM product_details")
     products = products.fetchall()
     return render_template('productContainer.html', products = products)
@@ -84,7 +86,16 @@ def productView():
         redirect(url_for('products'))
 
     product = db.runQuery("SELECT * FROM product_details WHERE uid='{}'".format(productID)).fetchone()
-    return render_template('productView.html', product = product)
+    reviews = db.runQuery("SELECT * FROM feedback WHERE product='{}'".format(productID)).fetchall()
+    score = list()
+    for review in reviews:
+        score.append(float(review[2]))
+    if(len(score) != 0):
+        score = sum(score)/float(len(score))
+        score = str(score) + "/5"
+    else:
+        score = "unrated"
+    return render_template('productView.html', product = product, reviews = reviews, score = score)
 
 
 

@@ -2,6 +2,25 @@
 <html>
   <head>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      function increase(){
+        var value = parseInt($('#amountContainer').html());
+        value++;
+        if(value < 0){
+          value = 0;
+        }
+        $('#amountContainer').text(value);
+
+      }
+      function decrease(){
+        var value = parseInt($('#amountContainer').html());
+        value--;
+        if(value < 0){
+          value = 0;
+        }
+        $('#amountContainer').text(value);
+      }
+    </script>
   </head>
   <!-- CSS -->
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
@@ -9,23 +28,35 @@
     <header class="header">
       <p>{{product[1]}}</p>
     </header>
-    <div class="main">
-      <div class="">
-        <div class="productContainer">
-          <img src=" {{ url_for('static', filename=product[1].replace(" ", "-") + ".png") }} " />
-          <p>{{product[2]}}</p>
-          <p>COST: {{product[3]}}</p>
-          <p>STOCK: {{product[4]}}
-          <div id="{{product[0]}}productControlContainer" class = "productControlContainer">
-            <div id="{{product[0]}}productController" class= "productController">
-              <div onclick="increase()" id="incController" class = "incController">+</div>
-              <div onclick="decrease()" id="decController" class = "decController">-</div>
-            </div>
-            <div id="amountContainer" class = "amountContainer">0</div>
-            <div id="productCartButton" class = "productCartButton"></div>
+    <div style="margin:0px auto;" class="main">
+      <div style="margin:0px auto;" class="productContainer">
+        <img src=" {{ url_for('static', filename=product[1].replace(" ", "-") + ".png") }} " />
+        <p>{{product[2]}}</p>
+        <p>COST: {{product[3]}}</p>
+        <p>STOCK: {{product[4]}}</p>
+        <p>SCORE: {{score}}</p>
+        <div id="{{product[0]}}productControlContainer" class = "productControlContainer">
+          <div id="{{product[0]}}productController" class= "productController">
+            <div onclick="increase()" id="incController" class = "incController">+</div>
+            <div onclick="decrease()" id="decController" class = "decController">-</div>
           </div>
+          <div id="amountContainer" class = "amountContainer">0</div>
+          <div id="productCartButton" class = "productCartButton"></div>
         </div>
       </div>
+      <p style="font-size: 20px;">Reviews:</p>
+      {% for review in reviews %}
+        <p>Comment: {{review[3]}}, score: {{review[2]}}/5</p>
+      {% endfor %}
+    </div>
+    <div>
+      <form class="form-container" action="{{url_for('products')}}" method="POST" style:"float: right;">
+        <p class="form-title">Review this product!</p>
+        <input type="hidden" name="productIDReview" value="{{product[0]}}">
+        <input class="form-field" type="text" name="comment" placeholder="Comment..."><br/>
+        <input style="width: 60px;" type="number" placeholder="Score..." name="score" min="1" max="5"><br\>
+        <input class="submit-button" type="submit" name="reviewSubmit" value="submit">
+      </form>
     </div>
   </body>
 </html>
