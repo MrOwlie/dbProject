@@ -38,7 +38,9 @@
         <div onclick="decrease{{product[0]}}()" id="{{product[0]}}decController" class = "decController">-</div>
       </div>
       <div id="{{product[0]}}amountContainer" class = "amountContainer">0</div>
-      <div id="{{product[0]}}productCartButton" class = "productCartButton"></div>
+      <div id="{{product[0]}}productCartButton" class = "productCartButton">
+        <img src=" {{ url_for('static', filename="cartButton.png") }} " />
+      </div>
     </div>
 
 
