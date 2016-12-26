@@ -12,6 +12,7 @@ from flask_cors import CORS
 from Database import Database
 from UserHandler import UserHandler
 from Cart import Cart
+from Order import Order
 
 
 
@@ -75,14 +76,36 @@ def products():
     if(request.cookies.get('seshID') is None or request.cookies.get('seshID') not in userHandler.users):
         return redirect(url_for('root'))
     if(request.form.get('reviewSubmit') is not None):
-        db.runQuery("INSERT INTO feedback (product, rating, comment) VALUES ('{}' , '{}' , '{}')".format(request.form.get('productIDReview'), request.form.get('score'), request.form.get('comment')))
+        query = "INSERT INTO feedback (product, rating, comment) VALUES ('{}' , '{}' , '{}')".format(request.form.get('productIDReview'), request.form.get('score'), request.form.get('comment'))
+        db.runQuery(query)
     products = db.runQuery("SELECT * FROM product_details")
     products = products.fetchall()
     cart = Cart(db)
     cart.get(userHandler.users[request.cookies.get('seshID')].ID)
     cartItems = cart.getDetails()
-
     return render_template('productContainer.html', products = products, cartitems = cartItems)
+
+@app.route('/order', methods=['GET', 'POST'])
+def order():
+    switch = request.form.get("submit")
+    address = request.form.get("address")
+    if(address != None):
+
+        zip = request.form.get("zipCode")
+        city = request.form.get("city")
+        cart = Cart(db)
+        cartID = cart.get(userHandler.users[request.cookies.get('seshID')].ID)
+        order = Order(db)
+
+        order.place(cartID, address, zip, city)
+        cart.lock()
+        cart.new(userHandler.users[request.cookies.get('seshID')].ID)
+        return redirect(url_for('products'))
+
+    cart = Cart(db)
+    cart.get(userHandler.users[request.cookies.get('seshID')].ID)
+    cartItems = cart.getDetails()
+    return render_template('orderContainer.html', cartitems = cartItems)
 
 @app.route('/product', methods = ['GET', 'POST'])
 def productView():

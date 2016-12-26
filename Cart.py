@@ -15,7 +15,7 @@ class Cart:
 
     def get(self, userID):
         self.userID = userID
-        cartID = self.db.runQuery("SELECT uid FROM carts WHERE customer='{}'".format(userID))
+        cartID = self.db.runQuery("SELECT uid FROM carts WHERE customer='{}' && locked = '0'".format(userID))
         self.cartID = cartID.fetchone()[0]
         query = "SELECT details FROM products WHERE cart = '{}'".format(self.cartID)
         products = self.db.runQuery(query).fetchall()
@@ -36,11 +36,8 @@ class Cart:
                 tmp.append(detail)
                 details = [self.products.count(detail)]
                 detail = self.db.runQuery("SELECT uid, name, description, price, stock FROM product_details WHERE uid = '{}'".format(detail)).fetchall()[0]
-                print ("DEEETAILS")
-                print (detail)
                 for item in detail:
                     details.append(item)
-                print (details)
                 #details = details +
                 products.append(details)
         #count, uid, name, description, price, stock
@@ -71,6 +68,9 @@ class Cart:
             self.products.remove(detailsID)
         self.db.runQuery("DELETE FROM products WHERE cart = {} && details = {}".format(self.cartID, detailsID))
         return True
+
+    def lock(self):
+        self.db.runQuery("UPDATE carts SET locked = 1 WHERE uid = '{}'".format(self.cartID))
 
     def clear(self):
         self.products = []

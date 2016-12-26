@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 CREATE TABLE IF NOT EXISTS `orders` (
   `uid` int(12) NOT NULL AUTO_INCREMENT,
-  `delivery_adress` varchar(64) NOT NULL,
+  `delivery_address` varchar(64) NOT NULL,
   `delivery_zip` varchar(8) NOT NULL,
   `delivery_city` varchar(64) NOT NULL,
   `cart_uid` int(8) NOT NULL,
@@ -80,16 +80,12 @@ CREATE TABLE IF NOT EXISTS `orders` (
 
 
 INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('Johan Kannel','12345','asdasd','johan.kannel@gmail.com',1232,24323,'123',3);
+INSERT INTO carts (customer) VALUES (12);
 INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('Fredrik Uvgård','123456','asdasd','fredrik.uvgard@gmail.com',1232,24323,'123',3);
+INSERT INTO carts (customer) VALUES (13);
 INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('asd','asd','asd','asd',1232,24323,'asd',3);
+INSERT INTO carts (customer) VALUES (14);
 
 INSERT INTO product_details (name,description,price,stock) VALUES ('Anti-fire potion','Avoid burns with this tasty potion',50,4);
 INSERT INTO product_details (name,description,price,stock) VALUES ('Cure potion','Cure even the most severe ailments',3000,1);
 INSERT INTO product_details (name,description,price,stock) VALUES ('Mana potion','Did you cast too many spells again? Drink this to keep going!',2000,3);
-
-INSERT INTO carts (customer, locked) VALUES (14,0);
-INSERT INTO products (cart, details) VALUES (12,12);
-INSERT INTO products (cart, details) VALUES (13,12);
-INSERT INTO products (cart, details) VALUES (14,12);
-INSERT INTO products (cart, details) VALUES (14,12);
-INSERT INTO products (cart, details) VALUES (12,12);
