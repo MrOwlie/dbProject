@@ -16,6 +16,16 @@
             {% include 'productContainerTemplate.html' %}
           {% endwith %}
         {% endfor %}
+
+      </div>
+      <div class="cartView">
+        <h2>Cart:</h2>
+        {% for item in cartitems %}
+          {% with product = item %}
+            {% include 'cartContainerTemplate.html' %}
+          {% endwith %}
+        {% endfor %}
+        <div class="orderButton"></div>
       </div>
     </div>
   </body>

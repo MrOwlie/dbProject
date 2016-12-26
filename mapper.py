@@ -11,6 +11,7 @@ from flask_jsonrpc import JSONRPC
 from flask_cors import CORS
 from Database import Database
 from UserHandler import UserHandler
+from Cart import Cart
 
 
 
@@ -19,6 +20,7 @@ app = Flask(__name__)
 #CORS(app)#
 db = Database(app)
 userHandler = UserHandler(db)
+
 
 #initialize the MySQL connection
 
@@ -33,7 +35,6 @@ userHandler = UserHandler(db)
 
 @app.route('/', methods=['GET', 'POST'])
 def root():
-    print(userHandler.users)
     if(request.cookies.get('seshID') in userHandler.users):
         response = make_response(render_template('account.html', headerTitle = "Account", content=["account"], user = userHandler.users[request.cookies.get('seshID')]))
         return response
@@ -42,10 +43,8 @@ def root():
     if(switch == "Login"):
         loginString = userHandler.returningUser(request.form.get("email"), request.form.get("password"))
         if('ERROR:' in str(loginString)):
-            print(loginString)
             return render_template("account.html", content = ["login"], loginError = loginString, headerTitle = "Login")
         else:
-            print("uuid: " + str(loginString))
             response = make_response(redirect(url_for('products')))
             response.set_cookie('seshID', loginString)
             return response
@@ -76,10 +75,14 @@ def products():
     if(request.cookies.get('seshID') is None or request.cookies.get('seshID') not in userHandler.users):
         return redirect(url_for('root'))
     if(request.form.get('reviewSubmit') is not None):
-        db.runQuery("INSERT INTO feedback (product, rating, comment) VALUES ('{}' , '{}' , '{}') ".format(request.form.get('productIDReview'), request.form.get('score'), request.form.get('comment')))
+        db.runQuery("INSERT INTO feedback (product, rating, comment) VALUES ('{}' , '{}' , '{}')".format(request.form.get('productIDReview'), request.form.get('score'), request.form.get('comment')))
     products = db.runQuery("SELECT * FROM product_details")
     products = products.fetchall()
-    return render_template('productContainer.html', products = products)
+    cart = Cart(db)
+    cart.get(userHandler.users[request.cookies.get('seshID')].ID)
+    cartItems = cart.getDetails()
+
+    return render_template('productContainer.html', products = products, cartitems = cartItems)
 
 @app.route('/product', methods = ['GET', 'POST'])
 def productView():
@@ -162,6 +165,23 @@ def register():
 def reset():
     return render_template('reset.html', data = 'Did not confirm yet')
 
+@app.route('/addToCart', methods=['GET', 'POST'])
+def addToCart():
+    value = int(request.form.get('amount'))
+    productID = int(request.form.get('product'))
+    cart = Cart(db)
+    cartID = cart.get(userHandler.users[request.cookies.get('seshID')].ID)
+    cart.add(productID,value)
+    return redirect(url_for('products'))
+
+@app.route('/removeFromCart', methods=['GET', 'POST'])
+def removeFromCart():
+    productID = int(request.form.get('product'))
+    cart = Cart(db)
+    cartID = cart.get(userHandler.users[request.cookies.get('seshID')].ID)
+    cart.remove(productID)
+    return redirect(url_for('products'))
+
 @app.route('/account', methods=['GET', 'POST'])
 def account():
     return render_template('AccountWidget.html', headerTitle = "Account", )
@@ -180,4 +200,3 @@ if __name__ == '__main__':
     app.run()
     while True:
         time.sleep(10)
-        print(userHandler.users);

@@ -15,9 +15,14 @@ class Cart:
 
     def get(self, userID):
         self.userID = userID
-        self.cartID = self.db.runQuery("SELECT uid FROM carts WHERE customer='{}'".format(userID)).fetchone()
-        self.products = self.db.runQuery("SELECT details FROM products WHERE cart = '{}'".format(self.cartID)).fetchall()
-        print (self.products)
+        cartID = self.db.runQuery("SELECT uid FROM carts WHERE customer='{}'".format(userID))
+        self.cartID = cartID.fetchone()[0]
+        query = "SELECT details FROM products WHERE cart = '{}'".format(self.cartID)
+        products = self.db.runQuery(query).fetchall()
+        array = []
+        for i in range(0,len(products)):
+            array.append (products[i][0])
+        self.products = array
         return self.cartID
 
     def getProducts(self):
@@ -30,10 +35,17 @@ class Cart:
             if(detail not in tmp):
                 tmp.append(detail)
                 details = [self.products.count(detail)]
-                details = details + self.db.runQuery("SELECT name, description, price, stock FROM product_details WHERE uid = '{}'".format(detail)).fetchone()
+                detail = self.db.runQuery("SELECT uid, name, description, price, stock FROM product_details WHERE uid = '{}'".format(detail)).fetchall()[0]
+                print ("DEEETAILS")
+                print (detail)
+                for item in detail:
+                    details.append(item)
+                print (details)
+                #details = details +
                 products.append(details)
-        #count, name, description, price, stock
-        return details
+        #count, uid, name, description, price, stock
+        print(products)
+        return products
 
     def getPrice(self):
         price = 0
@@ -42,8 +54,10 @@ class Cart:
         return price
 
     def add(self, detailsID, amount):
-        for _i in range(1,amount):
+        print ("ADDING " + str(amount))
+        for _i in range(0,amount):
             self.products.append(detailsID)
+            print ("ADDING")
             self.db.runQuery("INSERT INTO products (cart, details) VALUES ('{}','{}')".format(self.cartID, detailsID))
         return True
 

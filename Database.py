@@ -21,7 +21,6 @@ class Database:
     def runQuery(self, query):
         #Creates cursor, executes query and returns the cursor
         try:
-            print(query)
             cursor = self.getCursor()
             cursor.execute(query)
             self.conn.commit()
@@ -37,6 +36,4 @@ class Database:
             realPassword = realPassword.fetchone()[0]
         except (TypeError):
             return False
-
-        print ("passwords: {}, {}, {}".format(password, realPassword, password == realPassword))
         return (password == realPassword)

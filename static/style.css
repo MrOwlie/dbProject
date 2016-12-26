@@ -155,6 +155,27 @@ body{
   margin: 0px auto;
 }
 
+.cartView {
+  width: 200px;
+  margin: 0px auto;
+  float: left;
+}
+
+.cartView h2 {
+  text-align: center;
+  color: white;
+}
+
+.cartContainer{
+  float:left;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  width: 170px;
+  /*height: 230px;*/
+  background-color: #40669e;
+  text-align: center;
+}
+
 .titleContainer{
   color: #55a3db;
 }

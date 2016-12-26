@@ -25,6 +25,20 @@
   function show{{product[0]}}(){
     $('#{{product[0]}}redirect').submit()
   }
+  function cartAdd{{product[0]}}(){
+    var value = $('#{{product[0]}}amountContainer').html();
+    if(value == 0) {return;}
+    $('#{{product[0]}}amountContainer').text(0);
+    $('#amountToAdd').val(value);
+    $.post("{{url_for('addToCart')}}",
+    {
+      product: '{{product[0]}}',
+      amount: value
+    },
+    function(data,status){
+      location.href = location.href;
+    });
+  }
 
 
 
@@ -41,13 +55,17 @@
       </div>
       <div id="{{product[0]}}amountContainer" class = "amountContainer">0</div>
       <div id="{{product[0]}}productCartButton" class = "productCartButton">
-        <img src=" {{ url_for('static', filename="cartButton.png") }} " />
+        <img onclick="cartAdd{{product[0]}}()" src=" {{ url_for('static', filename="cartButton.png") }} " />
       </div>
     </div>
     <!--- REDIRECT DUMMY FORM -->
     <div style="display: none;">
       <form action="{{url_for('productView')}}" method="POST" id="{{product[0]}}redirect">
         <input type="hidden" name="product" value="{{product[0]}}">
+      </form>
+      <form action="{{url_for('addToCart')}}" method="POST" id="{{product[0]}}additem">
+        <input type="hidden" name="product" value="{{product[0]}}">
+        <input type="hidden" name="amount" id="amountToAdd">
       </form>
     </div>
 

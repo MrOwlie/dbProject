@@ -1,0 +1,67 @@
+
+<html>
+
+  <head>
+  </head>
+  <script>
+
+  function cartIncrease{{product[1]}}(){
+    var value = parseInt($('#{{product[1]}}cartAmountContainer').html());
+    value++;
+    if(value <= 0){
+      value = 0;
+      location.href = location.href;
+    }
+    $('#{{product[1]}}cartAmountContainer').text(value);
+
+    $.post("{{url_for('addToCart')}}",
+    {
+      product: '{{product[1]}}',
+      amount: 1
+    },
+    function(data,status){
+
+    });
+  }
+  function cartDecrease{{product[1]}}(){
+    var value = parseInt($('#{{product[1]}}cartAmountContainer').html());
+    if(value <= 0){
+      value = 0;
+    }
+
+    if(value != 0){
+      value--;
+      $('#{{product[1]}}cartAmountContainer').text(value);
+      $.post("{{url_for('removeFromCart')}}",
+      {
+        product: '{{product[1]}}',
+        amount: 1
+      },
+      function(data,status){
+        if(value <= 0){
+          location.href = location.href;
+        }
+      });
+    }
+
+  }
+
+
+  </script>
+  <div id="{{product[1]}}cartContainer" class = "cartContainer">
+    <div id="{{product[1]}}titleContainer" class = "titleContainer">{{ product[2] }}</div>
+    <div id="{{product[1]}}productControlContainer" class = "productControlContainer">
+      <div id="{{product[1]}}productController" class= "productController">
+        <div onclick="cartIncrease{{product[1]}}()" id="{{product[1]}}cartIncController" class = "incController">+</div>
+        <div onclick="cartDecrease{{product[1]}}()" id="{{product[1]}}cartDecController" class = "decController">-</div>
+      </div>
+      <div id="{{product[1]}}cartAmountContainer" class = "amountContainer">{{product[0]}}</div>
+      <div id="{{product[1]}}cartProductButton" class = "productButton"></div>
+    </div>
+
+
+
+
+  </div>
+
+</html>
