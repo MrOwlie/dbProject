@@ -50,19 +50,18 @@ class User:
     def update(self):
         #This function will update the user object from DB
         print("update: " + self.email)
-        data = self.db.runQuery('SELECT uid, name, ssn, address, email, city, zipCode, phone, password, adminlevel FROM users WHERE email = ' + "'" + self.email + "'")
+        data = self.db.runQuery('SELECT name, ssn, address, email, city, zipCode, phone, password, adminlevel FROM users WHERE email = ' + "'" + self.email + "'")
         data = data.fetchone()
         print(data)
-        self.adminlevel = data[9]
-        self.password = data[8]
-        self.phone = data[7]
-        self.zipCode = data[6]
-        self.city = data[5]
-        self.email = data[4]
-        self.address = data[3]
-        self.ssn = data[2]
-        self.name = data[1]
-        self.ID = data[0]
+        self.adminlevel = data[8]
+        self.password = data[7]
+        self.phone = data[6]
+        self.zipCode = data[5]
+        self.city = data[4]
+        self.email = data[3]
+        self.address = data[2]
+        self.ssn = data[1]
+        self.name = data[0]
 
     def registerDB(self):
         #This function will insert the user object in DB

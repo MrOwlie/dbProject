@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `phone` varchar(32) NOT NULL,
   `password` varchar(64) NOT NULL,
   `adminlevel` int(8) NOT NULL DEFAULT '0',
-  `banned` boolean NOT NULL DEFAULT 'FALSE',
+  `banned` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`email`),
   UNIQUE KEY `ssn` (`ssn`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
@@ -80,11 +80,11 @@ CREATE TABLE IF NOT EXISTS `orders` (
 
 
 INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('Johan Kannel','12345','asdasd','johan.kannel@gmail.com',1232,24323,'123',3);
-INSERT INTO carts (customer) VALUES (12);
+INSERT INTO carts (customer) VALUES ('johan.kannel@gmail.com');
 INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('Fredrik Uvgård','123456','asdasd','fredrik.uvgard@gmail.com',1232,24323,'123',3);
-INSERT INTO carts (customer) VALUES (13);
+INSERT INTO carts (customer) VALUES ('fredrik.uvgard@gmail.com');
 INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('asd','asd','asd','asd',1232,24323,'asd',3);
-INSERT INTO carts (customer) VALUES (14);
+INSERT INTO carts (customer) VALUES ('asd');
 
 INSERT INTO product_details (name,description,price,stock) VALUES ('Anti-fire potion','Avoid burns with this tasty potion',50,4);
 INSERT INTO product_details (name,description,price,stock) VALUES ('Cure potion','Cure even the most severe ailments',3000,1);
