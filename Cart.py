@@ -6,16 +6,16 @@ class Cart:
         self.db = db;
 
 
-    def new(self, userID):
+    def new(self, userMail):
         self.products = []
-        self.userID = userID
-        self.db.runQuery("INSERT INTO carts (customer) VALUES ('{}')".format(userID))
-        self.cartID = self.db.runQuery("SELECT uid FROM carts WHERE customer = '{}'".format(userID)).fetchone()
+        self.userMail = userMail
+        self.db.runQuery("INSERT INTO carts (customer) VALUES ('{}')".format(userMail))
+        self.cartID = self.db.runQuery("SELECT uid FROM carts WHERE customer = '{}'".format(userMail)).fetchone()
         return self.cartID
 
-    def get(self, userID):
-        self.userID = userID
-        cartID = self.db.runQuery("SELECT uid FROM carts WHERE customer='{}' && locked = '0'".format(userID))
+    def get(self, userMail):
+        self.userMail = userMail
+        cartID = self.db.runQuery("SELECT uid FROM carts WHERE customer='{}' && locked = '0'".format(userMail))
         self.cartID = cartID.fetchone()[0]
         query = "SELECT details FROM products WHERE cart = '{}'".format(self.cartID)
         products = self.db.runQuery(query).fetchall()
@@ -51,10 +51,8 @@ class Cart:
         return price
 
     def add(self, detailsID, amount):
-        print ("ADDING " + str(amount))
         for _i in range(0,amount):
             self.products.append(detailsID)
-            print ("ADDING")
             self.db.runQuery("INSERT INTO products (cart, details) VALUES ('{}','{}')".format(self.cartID, detailsID))
         return True
 

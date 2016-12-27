@@ -52,10 +52,10 @@ CREATE TABLE IF NOT EXISTS `feedback` (
 
 CREATE TABLE IF NOT EXISTS `carts` (
   `uid` int(12) NOT NULL AUTO_INCREMENT,
-  `customer` int(12) NOT NULL,
+  `customer` varchar(64) NOT NULL,
   `locked` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`),
-  FOREIGN KEY (customer) REFERENCES users(uid)
+  FOREIGN KEY (customer) REFERENCES users(email)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 CREATE TABLE IF NOT EXISTS `products` (
