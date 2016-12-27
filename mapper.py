@@ -81,7 +81,7 @@ def products():
     products = db.runQuery("SELECT * FROM product_details")
     products = products.fetchall()
     cart = Cart(db)
-    cart.get(userHandler.users[request.cookies.get('seshID')].ID)
+    cart.get(userHandler.users[request.cookies.get('seshID')].email)
     cartItems = cart.getDetails()
     return render_template('productContainer.html', products = products, cartitems = cartItems)
 
@@ -94,16 +94,16 @@ def order():
         zip = request.form.get("zipCode")
         city = request.form.get("city")
         cart = Cart(db)
-        cartID = cart.get(userHandler.users[request.cookies.get('seshID')].ID)
+        cartID = cart.get(userHandler.users[request.cookies.get('seshID')].email)
         order = Order(db)
 
         order.place(cartID, address, zip, city)
         cart.lock()
-        cart.new(userHandler.users[request.cookies.get('seshID')].ID)
+        cart.new(userHandler.users[request.cookies.get('seshID')].email)
         return redirect(url_for('products'))
 
     cart = Cart(db)
-    cart.get(userHandler.users[request.cookies.get('seshID')].ID)
+    cart.get(userHandler.users[request.cookies.get('seshID')].email)
     cartItems = cart.getDetails()
     return render_template('orderContainer.html', cartitems = cartItems)
 
@@ -193,7 +193,7 @@ def addToCart():
     value = int(request.form.get('amount'))
     productID = int(request.form.get('product'))
     cart = Cart(db)
-    cartID = cart.get(userHandler.users[request.cookies.get('seshID')].ID)
+    cartID = cart.get(userHandler.users[request.cookies.get('seshID')].email)
     cart.add(productID,value)
     return redirect(url_for('products'))
 
@@ -201,18 +201,18 @@ def addToCart():
 def removeFromCart():
     productID = int(request.form.get('product'))
     cart = Cart(db)
-    cartID = cart.get(userHandler.users[request.cookies.get('seshID')].ID)
+    cartID = cart.get(userHandler.users[request.cookies.get('seshID')].email)
     cart.remove(productID)
     return redirect(url_for('products'))
 
 @app.route('/account', methods=['GET', 'POST'])
 def account():
-    return render_template('AccountWidget.html', headerTitle = "Account", )
+    return render_template('AccountWidget.html', headerTitle = "Account")
 
 @app.route('/resetConfirmed', methods=['GET','POST'])
 def resetConfirmed():
     f = open('/SQL_setup.sql','r')
-    data = f.read();
+    data = f.read()
     data = data.replace("\n", "")
     db.runQuery(data)
     return render_template('resetConfirmed.html', data = "The database has been reset!")
