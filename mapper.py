@@ -222,7 +222,7 @@ def resetConfirmed():
 @app.route('/banUser', methods=['GET', 'POST'])
 def banUser():
     if(request.cookies.get('seshID') in userHandler.users):
-        if(userHandler.users[request.cookies.get('seshID')].adminlevel => 2):
+        if(userHandler.users[request.cookies.get('seshID')].adminlevel >= 2):
             userHandler.banUser(request.form.get('email'))
     return redirect(url_for('root'))
 
