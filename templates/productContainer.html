@@ -36,7 +36,9 @@
             {% include 'cartContainerTemplate.html' %}
           {% endwith %}
         {% endfor %}
-        <div onclick="order()" id="orderButton" class = "orderButton">Order</div>
+        {% if(showOrder) %}
+          <div onclick="order()" id="orderButton" class = "orderButton">Order</div>
+        {% endif %}
       </div>
     </div>
   </body>

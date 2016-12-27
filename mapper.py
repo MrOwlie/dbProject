@@ -85,7 +85,7 @@ def products():
     cart = Cart(db)
     cart.get(userHandler.users[request.cookies.get('seshID')].email)
     cartItems = cart.getDetails()
-    return render_template('productContainer.html', products = products, cartitems = cartItems)
+    return render_template('productContainer.html', products = products, cartitems = cartItems, showOrder = (len(cartItems) > 0))
 
 @app.route('/order', methods=['GET', 'POST'])
 def order():
