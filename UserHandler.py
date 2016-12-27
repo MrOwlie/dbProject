@@ -7,6 +7,10 @@ class UserHandler:
         self.db = db;
         self.users = dict()
 
+    def banUser(self, email):
+        query = "UPDATE users SET banned = TRUE where email = " + email
+        self.db.runQuery(query);
+
     def newUser(self, name, email, password, zipCode, city, address, phone, ssn):
         seshID = str(uuid.uuid4().hex)
         user = User.register(self.db, seshID, email, password, name, zipCode, city, address, phone, ssn)
