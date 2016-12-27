@@ -53,7 +53,9 @@ def root():
     elif(switch == "Register"):
         if(request.form.get("password") == request.form.get("passwordConfirm")):
             userHandler.newUser(request.form.get("name"), request.form.get("email"), request.form.get("password"), request.form.get("zipCode"), request.form.get("city"), request.form.get("address"), request.form.get("phone"), request.form.get("ssn"))
-            return render_template('account.html', content = ["register"], headerTitle = "Register")
+            response = make_response(redirect(url_for('products')))
+            response.set_cookie('seshID', loginString)
+            return response
         else:
             request.form.clear
             return make_response("<p style='color:red; font-size:3em;'>Error: Passwords do not match!</p>", 1337)
