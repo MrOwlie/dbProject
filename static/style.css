@@ -1,10 +1,9 @@
 .header{
-  height: 1em;
+  height: 40px;
   background-color:#40669e;
   font-size:2em; color:#55a3db;
   text-align:center;
   color:#81c1ef;
-
 }
 body{
   background-color:#5a89ce;

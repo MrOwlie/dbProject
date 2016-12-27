@@ -5,6 +5,11 @@
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
   <body>
     <header class="header">
+      {% if "account" in content %}
+      <a style="float: left;" href="{{url_for('products')}}">
+        <img src="{{url_for('static', filename = 'cartButton.png')}}" style="width:40px;height:40px;border:0;float:left;">
+      </a>
+      {% endif %}
       <p>{{headerTitle}}</p>
     </header>
     <div class="main">

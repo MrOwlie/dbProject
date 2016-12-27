@@ -37,6 +37,7 @@ userHandler = UserHandler(db)
 @app.route('/', methods=['GET', 'POST'])
 def root():
     if(request.cookies.get('seshID') in userHandler.users):
+        activeCheck()
         response = make_response(render_template('account.html', headerTitle = "Account", content=["account"], user = userHandler.users[request.cookies.get('seshID')]))
         return response
     errors = []
@@ -63,6 +64,7 @@ def root():
             return make_response("<p style='color:red; font-size:3em;'>Error: Passwords do not match!</p>", 1337)
 
     elif(switch == "Account"):
+        activeCheck()
         name = request.form.get("name")
         email = request.form.get("email")
         password = request.form.get("password")
@@ -77,6 +79,7 @@ def root():
 
 @app.route('/products', methods=['GET', 'POST'])
 def products():
+    activeCheck()
     if(request.cookies.get('seshID') is None or request.cookies.get('seshID') not in userHandler.users):
         return redirect(url_for('root'))
     if(request.form.get('reviewSubmit') is not None):
@@ -91,6 +94,7 @@ def products():
 
 @app.route('/order', methods=['GET', 'POST'])
 def order():
+    activeCheck()
     switch = request.form.get("submit")
     address = request.form.get("address")
     if(address != None):
@@ -113,6 +117,7 @@ def order():
 
 @app.route('/product', methods = ['GET', 'POST'])
 def productView():
+    activeCheck()
     if(request.cookies.get('seshID') is None or request.cookies.get('seshID') not in userHandler.users):
         return redirect(url_for('root'))
     productID = request.form.get("product")
@@ -136,7 +141,7 @@ def productView():
 
 
 
-@app.route('/register', methods=['GET', 'POST'])
+#@app.route('/register', methods=['GET', 'POST'])
 def register():
     if(request.form.get('submit')):
         error = ""
@@ -192,10 +197,12 @@ def register():
 
 @app.route('/reset', methods=['GET', 'POST'])
 def reset():
+    activeCheck()
     return render_template('reset.html', data = 'Did not confirm yet')
 
 @app.route('/addToCart', methods=['GET', 'POST'])
 def addToCart():
+    activeCheck()
     value = int(request.form.get('amount'))
     productID = int(request.form.get('product'))
     cart = Cart(db)
@@ -205,6 +212,7 @@ def addToCart():
 
 @app.route('/removeFromCart', methods=['GET', 'POST'])
 def removeFromCart():
+    activeCheck()
     productID = int(request.form.get('product'))
     cart = Cart(db)
     cartID = cart.get(userHandler.users[request.cookies.get('seshID')].email)
@@ -213,6 +221,7 @@ def removeFromCart():
 
 @app.route('/account', methods=['GET', 'POST'])
 def account():
+    activeCheck()
     return render_template('AccountWidget.html', headerTitle = "Account")
 
 @app.route('/resetConfirmed', methods=['GET','POST'])
@@ -225,6 +234,7 @@ def resetConfirmed():
 
 @app.route('/banUser', methods=['GET', 'POST'])
 def banUser():
+    activeCheck()
     if(request.cookies.get('seshID') in userHandler.users):
         if(userHandler.users[request.cookies.get('seshID')].adminlevel > 1):
             userHandler.banUser(request.form.get('email'))
@@ -232,6 +242,7 @@ def banUser():
 
 @app.route('/removeReview', methods=['GET', 'POST'])
 def removeReview():
+    activeCheck()
     ID = request.form.get('reviewDelete')
     if ID is None:
         return None
@@ -241,8 +252,12 @@ def removeReview():
             db.runQuery(query)
             return redirect(url_for('products'))
 
+def activeCheck():
+    if(request.cookies.get('seshID') in userHandler.users):
+        pass
+    else:
+        return redirect(url_for('root'))
+
 #Run the server
 if __name__ == '__main__':
-    app.run()
-    while True:
-        time.sleep(10)
+    app.run(threaded = True)
