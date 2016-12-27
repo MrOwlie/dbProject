@@ -79,11 +79,11 @@ CREATE TABLE IF NOT EXISTS `orders` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 
-INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('Johan Kannel','12345','asdasd','johan.kannel@gmail.com',1232,24323,'123',3);
+INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('Johan Kannel','12345','asdasd','johan.kannel@gmail.com',1232,24323,'123',2);
 INSERT INTO carts (customer) VALUES ('johan.kannel@gmail.com');
-INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('Fredrik Uvgård','123456','asdasd','fredrik.uvgard@gmail.com',1232,24323,'123',3);
+INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('Fredrik Uvgård','123456','asdasd','fredrik.uvgard@gmail.com',1232,24323,'123',2);
 INSERT INTO carts (customer) VALUES ('fredrik.uvgard@gmail.com');
-INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('asd','asd','asd','asd',1232,24323,'asd',3);
+INSERT INTO users (name,ssn,address,email,zipCode,phone,password,adminlevel) VALUES ('asd','asd','asd','asd',1232,24323,'asd',2);
 INSERT INTO carts (customer) VALUES ('asd');
 
 INSERT INTO product_details (name,description,price,stock) VALUES ('Anti-fire potion','Avoid burns with this tasty potion',50,4);
