@@ -47,6 +47,11 @@
       <p style="color: white; font-size: 20px;">Reviews:</p>
       {% for review in reviews %}
         <p style="color: white;">Comment: {{review[3]}}, score: {{review[2]}}/5</p>
+        {% if user.adminlevel > 0 %}
+        <form action="{{url_for('removeReview')}}" method="POST">
+          <input style="background-color: red" type="submit" name="reviewDelete" value="{{review[0]}}" />
+        </form>
+        {% endif %}
       {% endfor %}
     </div>
     <div>

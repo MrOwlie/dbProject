@@ -42,6 +42,8 @@ def root():
     errors = []
     switch = request.form.get("submit")
     if(switch == "Login"):
+        if (db.runQuery("SELECT banned FROM users WHERE email = '" + request.form.get("email") + "'").fetchone()[0] == 1):
+            return make_response("<h1 style='background-color: blue; color: red;'>BANNED SCRUB!</h1>", 1337)
         loginString = userHandler.returningUser(request.form.get("email"), request.form.get("password"))
         if('ERROR:' in str(loginString)):
             return render_template("account.html", content = ["login"], loginError = loginString, headerTitle = "Login")
@@ -52,9 +54,9 @@ def root():
 
     elif(switch == "Register"):
         if(request.form.get("password") == request.form.get("passwordConfirm")):
-            userHandler.newUser(request.form.get("name"), request.form.get("email"), request.form.get("password"), request.form.get("zipCode"), request.form.get("city"), request.form.get("address"), request.form.get("phone"), request.form.get("ssn"))
+            seshID = userHandler.newUser(request.form.get("name"), request.form.get("email"), request.form.get("password"), request.form.get("zipCode"), request.form.get("city"), request.form.get("address"), request.form.get("phone"), request.form.get("ssn"))
             response = make_response(redirect(url_for('products')))
-            response.set_cookie('seshID', loginString)
+            response.set_cookie('seshID', seshID)
             return response
         else:
             request.form.clear
@@ -127,7 +129,9 @@ def productView():
         score = "{0:.2f}".format(score) + "/5"
     else:
         score = "unrated"
-    return render_template('productView.html', product = product, reviews = reviews, score = score)
+
+    user = userHandler.users[request.cookies.get('seshID')]
+    return render_template('productView.html', user = user, product = product, reviews = reviews, score = score)
 
 
 
@@ -222,10 +226,20 @@ def resetConfirmed():
 @app.route('/banUser', methods=['GET', 'POST'])
 def banUser():
     if(request.cookies.get('seshID') in userHandler.users):
-        if(userHandler.users[request.cookies.get('seshID')].adminlevel >= 2):
+        if(userHandler.users[request.cookies.get('seshID')].adminlevel > 1):
             userHandler.banUser(request.form.get('email'))
     return redirect(url_for('root'))
 
+@app.route('/removeReview', methods=['GET', 'POST'])
+def removeReview():
+    ID = request.form.get('reviewDelete')
+    if ID is None:
+        return None
+    if(request.cookies.get('seshID') in userHandler.users):
+        if(userHandler.users[request.cookies.get('seshID')].adminlevel > 0):
+            query = "DELETE FROM feedback WHERE uid = '" + ID + "'"
+            db.runQuery(query)
+            return redirect(url_for('products'))
 
 #Run the server
 if __name__ == '__main__':

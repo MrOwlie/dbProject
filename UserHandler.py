@@ -8,7 +8,11 @@ class UserHandler:
         self.users = dict()
 
     def banUser(self, email):
-        query = "UPDATE users SET banned = TRUE where email = " + email
+        if(self.db.runQuery("SELECT banned FROM users WHERE email = '" + email + "'").fetchone()[0] == 0):
+            banFlag = "1"
+        else:
+            banFlag = "0"
+        query = "UPDATE users SET banned = '" + banFlag + "' where email = '" + email + "'"
         self.db.runQuery(query);
 
     def newUser(self, name, email, password, zipCode, city, address, phone, ssn):
