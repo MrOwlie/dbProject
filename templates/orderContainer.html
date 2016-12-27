@@ -7,28 +7,27 @@
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
   <script>
     function order() {
-
       $.post("{{url_for('order')}}",
-      {},
-      function(data,status){
-        location.href = "{{url_for('order')}}";
-      });
+      {
 
+      },
+      function(data,status){
+        location.href = location.href;
+      });
     }
   </script>
   <body class="body">
     <header class="header">
-      <p>Products</p>
+      <p>Order</p>
     </header>
     <div class="main">
-      <div class="productsView">
-        {% for item in products %}
-          {% with product = item %}
-            {% include 'productContainerTemplate.html' %}
-          {% endwith %}
-        {% endfor %}
-
-      </div>
+      <form class="form-container-order" action="{{ request.path }}" method="POST">
+        <div class="form-title"><h2>Order</h2></div>
+        <input class="form-field" type="text" name="address" placeholder='Delivery address'><br/>
+        <input class="form-field" type="text" name="zipCode" placeholder="Zip code..."><br/>
+        <input class="form-field" type="text" name="city" placeholder="City..."><br/>
+        <input class="submit-button" type="submit" name="PlaceOrder" value="Order"> <br/>
+      </form>
       <div class="cartView">
         <h2>Cart:</h2>
         {% for item in cartitems %}
@@ -36,7 +35,6 @@
             {% include 'cartContainerTemplate.html' %}
           {% endwith %}
         {% endfor %}
-        <div onclick="order()" id="orderButton" class = "orderButton">Order</div>
       </div>
     </div>
   </body>

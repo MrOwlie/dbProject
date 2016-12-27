@@ -1,5 +1,6 @@
 import uuid
 from User import User
+from Cart import Cart
 
 class UserHandler:
     def __init__(self, db):
@@ -7,11 +8,13 @@ class UserHandler:
         self.users = dict()
 
     def newUser(self, name, email, password, zipCode, city, address, phone, ssn):
-        ID = self.db.runQuery("SELECT MAX(uid) FROM users").fetchone()
+        ID = (self.db.runQuery("SELECT MAX(uid) FROM users").fetchone()[0]) + 1
         seshID = str(uuid.uuid4().hex)
         user = User.register(self.db, seshID, email, password, name, zipCode, city, address, phone, ssn)
         user.handler = self
         self.users[seshID] = user
+        cart = Cart(self.db)
+        cart.new(ID)
         return seshID
 
     def returningUser(self, email, password):

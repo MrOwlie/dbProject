@@ -12,3 +12,9 @@
   <input class="form-field" type="text" name="city" placeholder='City: {{user.city}}'><br/>
   <input class="submit-button" type="submit" name="EditAccount" value="Save"> <br/>
 </form>
+{% if user.accountlevel > 0 %}
+<form class="form-container" action="{{url_for('banUser')}}" method="POST">
+  <div class="form-title"> <h2> Ban user </h2> </div>
+  <input class="form-field" type="text" name="email" placeholder="email..."
+</form>
+{% endif %}

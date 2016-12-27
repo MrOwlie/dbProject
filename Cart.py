@@ -6,18 +6,23 @@ class Cart:
         self.db = db;
 
 
-    def newCart(self, userID):
+    def new(self, userID):
         self.products = []
         self.userID = userID
         self.db.runQuery("INSERT INTO carts (customer) VALUES ('{}')".format(userID))
         self.cartID = self.db.runQuery("SELECT uid FROM carts WHERE customer = '{}'".format(userID)).fetchone()
         return self.cartID
 
-    def getCart(self, userID):
+    def get(self, userID):
         self.userID = userID
-        self.cartID = self.db.runQuery("SELECT uid FROM carts WHERE customer='{}'".format(userID)).fetchone()
-        self.products = self.db.runQuery("SELECT details FROM products WHERE cart = '{}'".format(self.cartID)).fetchall()
-        print (self.products)
+        cartID = self.db.runQuery("SELECT uid FROM carts WHERE customer='{}' && locked = '0'".format(userID))
+        self.cartID = cartID.fetchone()[0]
+        query = "SELECT details FROM products WHERE cart = '{}'".format(self.cartID)
+        products = self.db.runQuery(query).fetchall()
+        array = []
+        for i in range(0,len(products)):
+            array.append (products[i][0])
+        self.products = array
         return self.cartID
 
     def getProducts(self):
@@ -30,10 +35,14 @@ class Cart:
             if(detail not in tmp):
                 tmp.append(detail)
                 details = [self.products.count(detail)]
-                details = details + self.db.runQuery("SELECT name, description, price, stock FROM product_details WHERE uid = '{}'".format(detail)).fetchone()
+                detail = self.db.runQuery("SELECT uid, name, description, price, stock FROM product_details WHERE uid = '{}'".format(detail)).fetchall()[0]
+                for item in detail:
+                    details.append(item)
+                #details = details +
                 products.append(details)
-        #count, name, description, price, stock
-        return details
+        #count, uid, name, description, price, stock
+        print(products)
+        return products
 
     def getPrice(self):
         price = 0
@@ -41,9 +50,12 @@ class Cart:
             price = price + self.db.runQuery("SELECT price FROM product_details WHERE uid = '{}'".format(product)).fetchone()
         return price
 
-    def add(self, detailsID):
-        self.products.append(detailsID)
-        self.db.runQuery("INSERT INTO products (cart, details) VALUES ('{}','{}')".format(self.cartID, detailsID))
+    def add(self, detailsID, amount):
+        print ("ADDING " + str(amount))
+        for _i in range(0,amount):
+            self.products.append(detailsID)
+            print ("ADDING")
+            self.db.runQuery("INSERT INTO products (cart, details) VALUES ('{}','{}')".format(self.cartID, detailsID))
         return True
 
     def remove(self, detailsID):
@@ -56,6 +68,9 @@ class Cart:
             self.products.remove(detailsID)
         self.db.runQuery("DELETE FROM products WHERE cart = {} && details = {}".format(self.cartID, detailsID))
         return True
+
+    def lock(self):
+        self.db.runQuery("UPDATE carts SET locked = 1 WHERE uid = '{}'".format(self.cartID))
 
     def clear(self):
         self.products = []

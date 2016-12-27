@@ -15,6 +15,7 @@ class User:
     def register(db, seshID, email, password, name, zipCode, city, address, phone, ssn):
         user = User(db, seshID, email, password, name, zipCode, city, address, phone, ssn)
         user.registerDB()
+        user.update()
         return user
 
     @staticmethod
@@ -36,18 +37,6 @@ class User:
         self.password = password
         self.seshID = seshID
 
-        print(self.db)
-        print(self.name)
-        print(self.ssn)
-        print(self.address)
-        print(self.email)
-        print(self.zipCode)
-        print(self.city)
-        print(self.phone)
-        print(self.password)
-        print(self.seshID)
-
-
 
     def validate(self):
         #checks if the password entered in the frontend matches our DB records
@@ -61,9 +50,10 @@ class User:
     def update(self):
         #This function will update the user object from DB
         print("update: " + self.email)
-        data = self.db.runQuery('SELECT uid, name, ssn, address, email, city, zipCode, phone, password FROM users WHERE email = ' + "'" + self.email + "'")
+        data = self.db.runQuery('SELECT uid, name, ssn, address, email, city, zipCode, phone, password, adminlevel FROM users WHERE email = ' + "'" + self.email + "'")
         data = data.fetchone()
         print(data)
+        self.adminlevel = data[9]
         self.password = data[8]
         self.phone = data[7]
         self.zipCode = data[6]
@@ -81,13 +71,17 @@ class User:
         print(query)
         self.db.runQuery(query)
 
+    def ban(self):
+        query = "UPDATE users SET banned = TRUE where email = " + self.email
+        self.db.runQuery(query)
+
     def save(self):
         #This function will update the user object in DB
         ##WIP : THIS SHOULD ONLY UPDATE THE RECORDS IN THE DATABASE
         ## ---> Use .register() to add new entries.
 
-        query = "UPDATE users SET name = '{}', ssn = '{}', adress = '{}', email = '{}', zip_code = '{}', city = '{}' phone = '{}', password = '{}' WHERE uid = '{}'"
-        query = query.format(self.name, self.ssn, self.address, self.email, self.zipCode, self.city, self.phone, self.password, self.ID)
+        query = "UPDATE users SET name = '{}', ssn = '{}', adress = '{}', email = '{}', zip_code = '{}', city = '{}' phone = '{}', password = '{}' WHERE email = '{}'"
+        query = query.format(self.name, self.ssn, self.address, self.newEmail, self.zipCode, self.city, self.phone, self.password, self.email)
         #query = "INSERT INTO users (name,ssn,adress,email,zip_code,phone,password) VALUES ('{}','{}','{}','{}','{}','{}','{}')".format(self.name, self.ssn, self.address, self.email, self.zipCode, self.phone, self.password)
         print (query)
         self.db.runQuery(query)
