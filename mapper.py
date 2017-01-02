@@ -38,34 +38,72 @@ userHandler = UserHandler(db)
 def root():
     if(request.cookies.get('seshID') in userHandler.users):
         activeCheck()
-        if(request.form.get('EditAccount') == 'save'):
-            querySelect = "UPDATE users "
-            querySet = "SET "
-            queryWhere = " WHERE email = '" + userHandler.users[request.cookies.get('seshID')] + "'"
-            if(request.form.get('password') not None):
-                if(request.form.get('password') == request.form.get('passwordConfirm')):
-                    querySet += "password = '" + request.form.get('password') + "', "
+        changes = False
+        querySelect = "UPDATE users "
+        querySet = "SET "
+        queryWhere = " WHERE email = '" + userHandler.users[request.cookies.get('seshID')].email + "'"
+        if(request.form.get('password') is not "" and request.form.get('password') is not None):
+            if(request.form.get('password') == request.form.get('passwordConfirm')):
+                if not changes:
+                    querySet += "password = '" + request.form.get('password') + "'"
+                else:
+                    quertSet += ", password = '" + request.form.get('password') + "'"
+                changes = True
 
-            if(request.form.get('name') not None):
-                querySet += "name = '" + request.form.get('name') + "', "
+        if(request.form.get('name') is not "" and request.form.get('name') is not None):
+            if not changes:
+                querySet += "name = '" + request.form.get('name') + "'"
+            else:
+                quertSet += ", name = '" + request.form.get('name') + "'"
+            changes = True
 
-            if(request.form.get('email') not None):
-                querySet += "email = '" + request.form.get('email') + "', "
+        if(request.form.get('email') is not "" and request.form.get('email') is not None):
+            if not changes:
+                querySet += "email = '" + request.form.get('email') + "'"
+            else:
+                quertSet += ", email = '" + request.form.get('email') + "'"
+            changes = True
 
-            if(request.form.get('phone') not None):
-                querySet += "phone = '" + request.form.get('phone') + "', "
+        if(request.form.get('phone') is not "" and request.form.get('phone') is not None):
+            if not changes:
+                querySet += "phone = '" + request.form.get('phone') + "'"
+            else:
+                quertSet += ", phone = '" + request.form.get('phone') + "'"
+            changes = True
 
-            if(request.form.get('ssn') not None):
-                querySet += "ssn = '" + request.form.get('ssn') + "', "
+        if(request.form.get('ssn') is not "" and request.form.get('ssn') is not None):
+            if not changes:
+                querySet += "ssn = '" + request.form.get('ssn') + "'"
+            else:
+                quertSet += ", ssn = '" + request.form.get('ssn') + "'"
+            changes = True
 
-            if(request.form.get('address') not None):
-                querySet += "address = '" + request.form.get('address') + "', "
+        if(request.form.get('address') is not "" and request.form.get('address') is not None):
+            if not changes:
+                querySet += "address = '" + request.form.get('address') + "'"
+            else:
+                quertSet += ", address = '" + request.form.get('address') + "'"
+            changes = True
 
-            if(request.form.get('zipCode') not None):
-                querySet += "zipCode = '" + request.form.get('zipCode') + "', "
+        if(request.form.get('zipCode') is not "" and request.form.get('zipCode') is not None):
+            if not changes:
+                querySet += "zipCode = '" + request.form.get('zipCode') + "'"
+            else:
+                quertSet += ", zipCode = '" + request.form.get('zipCode') + "'"
+            changes = True
 
-            if(request.form.get('city') not None):
-                querySet += "city = '" + request.form.get('city') + "', "
+        if(request.form.get('city') is not "" and request.form.get('city') is not None):
+            if not changes:
+                querySet += "city = '" + request.form.get('city') + "'"
+            else:
+                quertSet += ", city = '" + request.form.get('city') + "'"
+            changes = True
+
+        if changes:
+            query = querySelect + querySet + queryWhere
+
+            print(query)
+            db.runQuery(query)
 
 
         response = make_response(render_template('account.html', headerTitle = "Account", content=["account"], user = userHandler.users[request.cookies.get('seshID')]))
