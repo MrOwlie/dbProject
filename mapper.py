@@ -38,6 +38,36 @@ userHandler = UserHandler(db)
 def root():
     if(request.cookies.get('seshID') in userHandler.users):
         activeCheck()
+        if(request.form.get('EditAccount') == 'save'):
+            querySelect = "UPDATE users "
+            querySet = "SET "
+            queryWhere = " WHERE email = '" + userHandler.users[request.cookies.get('seshID')] + "'"
+            if(request.form.get('password') not None):
+                if(request.form.get('password') == request.form.get('passwordConfirm')):
+                    querySet += "password = '" + request.form.get('password') + "', "
+
+            if(request.form.get('name') not None):
+                querySet += "name = '" + request.form.get('name') + "', "
+
+            if(request.form.get('email') not None):
+                querySet += "email = '" + request.form.get('email') + "', "
+
+            if(request.form.get('phone') not None):
+                querySet += "phone = '" + request.form.get('phone') + "', "
+
+            if(request.form.get('ssn') not None):
+                querySet += "ssn = '" + request.form.get('ssn') + "', "
+
+            if(request.form.get('address') not None):
+                querySet += "address = '" + request.form.get('address') + "', "
+
+            if(request.form.get('zipCode') not None):
+                querySet += "zipCode = '" + request.form.get('zipCode') + "', "
+
+            if(request.form.get('city') not None):
+                querySet += "city = '" + request.form.get('city') + "', "
+
+
         response = make_response(render_template('account.html', headerTitle = "Account", content=["account"], user = userHandler.users[request.cookies.get('seshID')]))
         return response
     errors = []
