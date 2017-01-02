@@ -113,7 +113,8 @@ def products():
     if(request.cookies.get('seshID') is None or request.cookies.get('seshID') not in userHandler.users):
         return redirect(url_for('root'))
     if(request.form.get('reviewSubmit') is not None):
-        query = "INSERT INTO feedback (product, rating, comment) VALUES ('{}' , '{}' , '{}')".format(request.form.get('productIDReview'), request.form.get('score'), request.form.get('comment'))
+        query = "INSERT INTO feedback (product, rating, comment, username, email) VALUES ('{}' , '{}' , '{}' , '{}' , '{}')".format(request.form.get('productIDReview'), request.form.get('score'), request.form.get('comment'), userHandler.users[request.cookies.get('seshID')].name, userHandler.users[request.cookies.get('seshID')].email)
+        print (query)
         db.runQuery(query)
     products = db.runQuery("SELECT * FROM product_details")
     products = products.fetchall()
@@ -133,9 +134,10 @@ def order():
         city = request.form.get("city")
         cart = Cart(db)
         cartID = cart.get(userHandler.users[request.cookies.get('seshID')].email)
-        order = Order(db)
 
+        order = Order(db)
         order.place(cartID, address, zip, city)
+
         cart.lock()
         cart.new(userHandler.users[request.cookies.get('seshID')].email)
         return redirect(url_for('products'))
@@ -143,6 +145,7 @@ def order():
     cart = Cart(db)
     cart.get(userHandler.users[request.cookies.get('seshID')].email)
     cartItems = cart.getDetails()
+
     return render_template('orderContainer.html', cartitems = cartItems)
 
 @app.route('/product', methods = ['GET', 'POST'])
@@ -157,8 +160,12 @@ def productView():
     product = db.runQuery("SELECT * FROM product_details WHERE uid='{}'".format(productID)).fetchone()
     reviews = db.runQuery("SELECT * FROM feedback WHERE product='{}'".format(productID)).fetchall()
     score = list()
+
+    ownComment = []
     for review in reviews:
         score.append(float(review[2]))
+        if(review[4] == userHandler.users[request.cookies.get('seshID')].email):
+            ownComment = [review[2], review[5]]
     if(len(score) != 0):
         score = sum(score)/float(len(score))
         score = "{0:.2f}".format(score) + "/5"
@@ -166,7 +173,7 @@ def productView():
         score = "unrated"
 
     user = userHandler.users[request.cookies.get('seshID')]
-    return render_template('productView.html', user = user, product = product, reviews = reviews, score = score)
+    return render_template('productView.html', user = user, product = product, reviews = reviews, score = score, ownComment = ownComment)
 
 
 
