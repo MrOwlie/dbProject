@@ -250,13 +250,16 @@ def banUser():
 @app.route('/removeReview', methods=['GET', 'POST'])
 def removeReview():
     activeCheck()
-    ID = request.form.get('reviewDelete')
+    ID = request.form.get('reviewID')
+    email = request.form.get('reviewEmail')
+    #email = review[4]
     if ID is None:
         return None
     if(request.cookies.get('seshID') in userHandler.users):
         if(userHandler.users[request.cookies.get('seshID')].adminlevel > 0):
             query = "DELETE FROM feedback WHERE uid = '" + ID + "'"
             db.runQuery(query)
+            userHandler.banUser(email)
             return redirect(url_for('products'))
 
 def activeCheck():
