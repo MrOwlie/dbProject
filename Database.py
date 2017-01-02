@@ -9,7 +9,7 @@ class Database:
         app.config['MYSQL_DATABASE_USER'] = 'python'
         app.config['MYSQL_DATABASE_PASSWORD'] = 'pythonpesswerd'
         app.config['MYSQL_DATABASE_DB'] = 'dbproject'
-        app.config['MYSQL_DATABASE_HOST'] = 'arma.publiclir.se'
+        app.config['MYSQL_DATABASE_HOST'] = '192.168.1.36'
         self.mysql.init_app(app)
         self.conn = self.mysql.connect()
 

@@ -45,6 +45,8 @@ CREATE TABLE IF NOT EXISTS `feedback` (
   `uid` int(12) NOT NULL AUTO_INCREMENT,
   `product` int(12) NOT NULL,
   `rating` int(8) NOT NULL DEFAULT '3',
+  `username` varchar(50) NOT NULL,
+  `email` varchar(64) NOT NULL,
   `comment` text NOT NULL,
   PRIMARY KEY (`uid`),
   FOREIGN KEY (product) REFERENCES product_details(uid)

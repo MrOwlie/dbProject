@@ -46,21 +46,27 @@
       </div>
       <p style="color: white; font-size: 20px;">Reviews:</p>
       {% for review in reviews %}
-        <p style="color: white;">Comment: {{review[3]}}, score: {{review[2]}}/5</p>
+        <p style="color: white;">{{review[3]}} wrote: {{review[5]}}, score: {{review[2]}}/5</p>
         {% if user.adminlevel > 0 %}
         <form action="{{url_for('removeReview')}}" method="POST">
-          <input style="background-color: red" type="submit" name="reviewDelete" value="{{review[0]}}" />
+          <input style="background-color: red" type="submit" name="reviewDelete" value="{{review[0]}} " />
         </form>
         {% endif %}
       {% endfor %}
     </div>
     <div>
+
       <form class="form-container" action="{{url_for('products')}}" method="POST" style:"float: right;">
+        {% if len(ownComment) == 0 %}
         <p class="form-title">Review this product!</p>
         <input type="hidden" name="productIDReview" value="{{product[0]}}">
         <input class="form-field" type="text" name="comment" placeholder="Comment..."><br/>
         <input style="width: 60px;" type="number" placeholder="Score..." name="score" min="1" max="5"><br\>
         <input class="submit-button" type="submit" name="reviewSubmit" value="submit">
+        {% endif %}
+        {% if len(ownComment) > 0 %}
+        <p class="form-title">You commented: {{ownComment[1]}}, rating: {{ownComment[0]}}/5</p>
+        {% endif %}
       </form>
     </div>
   </body>
