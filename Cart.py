@@ -25,17 +25,34 @@ class Cart:
         self.products = array
         return self.cartID
 
+    def getWithID(self, ID):
+        self.cartID = ID
+        email = self.db.runQuery("SELECT customer FROM carts WHERE uid='{}'".format(ID))
+        self.userMail = email.fetchone()[0]
+        query = "SELECT details FROM products WHERE cart = '{}'".format(self.cartID)
+        products = self.db.runQuery(query).fetchall()
+        array = []
+        for i in range(0,len(products)):
+            array.append (products[i][0])
+        self.products = array
+        return self.cartID
+
     def getProducts(self):
         return self.products
 
-    def getDetails(self):
+    def getDetails(self, allDetails = True):
         products = []
         tmp = []
         for detail in self.products:
             if(detail not in tmp):
                 tmp.append(detail)
                 details = [self.products.count(detail)]
-                detail = self.db.runQuery("SELECT uid, name, description, price, stock FROM product_details WHERE uid = '{}'".format(detail)).fetchall()[0]
+                if(allDetails):
+                    query = "SELECT uid, name, description, price, stock FROM product_details WHERE uid = '{}'".format(detail)
+                else:
+                    query = "SELECT name FROM product_details WHERE uid = '{}'".format(detail)
+
+                detail = self.db.runQuery(query).fetchall()[0]
                 for item in detail:
                     details.append(item)
                 #details = details +
@@ -43,6 +60,9 @@ class Cart:
         #count, uid, name, description, price, stock
         print(products)
         return products
+
+    def getOwner(self):
+        return self.userMail
 
     def getPrice(self):
         price = 0

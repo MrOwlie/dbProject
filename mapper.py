@@ -315,6 +315,44 @@ def banUser():
             userHandler.banUser(request.form.get('email'))
     return redirect(url_for('root'))
 
+@app.route('/orders', methods=['GET', 'POST'])
+def orders():
+    order = Order(db)
+    setStandby = request.form.get("SetStandby")
+    setSent = request.form.get("SetSent")
+
+    status = -1
+    if(setStandby == "Set standby"):
+        status = 0
+    if(setSent == "Set sent"):
+        status = 1
+
+    if(status != -1):
+        orderID = int(request.form.get("orderID"))
+        print("ID:",orderID)
+        order.setStatus(status,orderID)
+        return redirect(url_for('orders'))
+
+    orders = order.getOrders()
+    processedOrders = []
+    for order in orders:
+
+        cart = Cart(db)
+        cart.getWithID(order[4])
+        email = cart.getOwner()
+
+        details = []
+        items = cart.getDetails(False)
+
+        theOrder = []
+        for value in order:
+            theOrder.append(value)
+        theOrder.append(email)
+        theOrder.append(items)
+        processedOrders.append(theOrder)
+    print(processedOrders)
+    return render_template('ordersContainer.html', orders = processedOrders)
+
 @app.route('/removeReview', methods=['GET', 'POST'])
 def removeReview():
     activeCheck()

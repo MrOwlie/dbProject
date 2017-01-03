@@ -1,0 +1,32 @@
+
+<html>
+
+  <head>
+  </head>
+  <script>
+
+
+  </script>
+  <div id="{{order[0]}}orderContainer" class = "orderContainer">
+    <div id="{{order[0]}}infoContainer" class = "infoContainer">Email: {{order[6]}}</div>
+    <div id="{{order[0]}}infoContainer" class = "infoContainer">Address: {{order[1]}}</div>
+    <div id="{{order[0]}}infoContainer" class = "infoContainer">Zip: {{order[2]}}</div>
+    <div id="{{order[0]}}infoContainer" class = "infoContainer">City: {{order[3]}}</div>
+    <form class="form-container-orders" action="{{ request.path }}" method="POST">
+      <input class="submit-button-orders" type="hidden" name="orderID" value="{{order[0]}}"> <br/>
+      {% if(order[5] == 1) %}
+        <input class="submit-button-orders" type="submit" name="SetStandby" value="Set standby"> <br/>
+      {% endif %}
+      {% if(order[5] == 0) %}
+        <input class="submit-button-orders" type="submit" name="SetSent" value="Set sent"> <br/>
+      {% endif %}
+    </form>
+
+    <div id="{{order[0]}}infoContainer" class = "orderItemsContainer">
+    {% for item in order[7] %}
+      <p>{{item[0]}} x {{item[1]}}</p>
+    {% endfor %}
+    </div>
+  </div>
+
+</html>

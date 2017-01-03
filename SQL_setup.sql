@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `delivery_zip` varchar(8) NOT NULL,
   `delivery_city` varchar(64) NOT NULL,
   `cart_uid` int(8) NOT NULL,
+  `sent` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`),
   FOREIGN KEY (cart_uid) REFERENCES carts(uid)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;

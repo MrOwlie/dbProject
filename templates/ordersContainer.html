@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  </head>
+  <!-- CSS -->
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <body class="body">
+    <header class="header">
+      <a style="float: left;" href="{{url_for('root')}}">
+        <img src="{{url_for('static', filename = 'accountButton.png')}}" style="width:40px;height:40px;border:0;float:left;">
+      </a>
+      <p>Orders</p>
+    </header>
+    <div class="main">
+      <div class="ordersView">
+        {% for item in orders %}
+          {% with order = item %}
+            {% include 'ordersContainerTemplate.html' %}
+          {% endwith %}
+        {% endfor %}
+
+      </div>
+    </div>
+  </body>
+</html>
